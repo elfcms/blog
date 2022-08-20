@@ -49,7 +49,7 @@ class BlogVoteController extends Controller
 
         }
 
-        return view('admin.blog.votes.index',[
+        return view('blog::admin.blog.votes.index',[
             'page' => [
                 'title' => 'Votes',
                 'current' => url()->current(),
@@ -70,7 +70,7 @@ class BlogVoteController extends Controller
     {
         $posts = BlogPost::all();
         $votes = BlogVote::all();
-        return view('admin.blog.votes.create',[
+        return view('blog::admin.blog.votes.create',[
             'page' => [
                 'title' => 'Create comment',
                 'current' => url()->current(),
@@ -147,7 +147,7 @@ class BlogVoteController extends Controller
     public function edit(BlogVote $vote)
     {
         $posts = BlogPost::all();
-        return view('admin.blog.votes.edit',[
+        return view('blog::admin.blog.votes.edit',[
             'page' => [
                 'title' => 'Edit vote',
                 'current' => url()->current(),

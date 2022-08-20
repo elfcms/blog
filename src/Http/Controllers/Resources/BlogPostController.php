@@ -42,7 +42,7 @@ class BlogPostController extends Controller
 
         }
 
-        return view('admin.blog.posts.index',[
+        return view('blog::admin.blog.posts.index',[
             'page' => [
                 'title' => 'Posts',
                 'current' => url()->current(),
@@ -62,7 +62,7 @@ class BlogPostController extends Controller
     public function create(Request $request)
     {
         $categories = BlogCategory::all();
-        return view('admin.blog.posts.create',[
+        return view('blog::admin.blog.posts.create',[
             'page' => [
                 'title' => 'Create post',
                 'current' => url()->current(),
@@ -86,7 +86,7 @@ class BlogPostController extends Controller
         $validated = $request->validate([
             'category_id' => 'required',
             'name' => 'required',
-            'slug' => 'required|unique:App\Models\BlogPost,slug',
+            'slug' => 'required|unique:Elfcms\Blog\Models\BlogPost,slug',
             'image' => 'nullable|file|max:512',
             'preview' => 'nullable|file|max:256'
         ]);
@@ -179,7 +179,7 @@ class BlogPostController extends Controller
             $post->updated = date('d.m.Y H:i:s',strtotime($post->updated_at));
         }
         $categories = BlogCategory::all();
-        return view('admin.blog.posts.edit',[
+        return view('blog::admin.blog.posts.edit',[
             'page' => [
                 'title' => 'Edit post #' . $post->id,
                 'current' => url()->current(),
@@ -212,7 +212,7 @@ class BlogPostController extends Controller
             $validated = $request->validate([
                 'category_id' => 'required',
                 'name' => 'required',
-                //'slug' => 'required|unique:App\Models\BlogPost,slug',
+                //'slug' => 'required|unique:Elfcms\Blog\Models\BlogPost,slug',
                 'image' => 'nullable|file|max:512',
                 'preview' => 'nullable|file|max:256'
             ]);

@@ -90,7 +90,7 @@
                             @if (!empty($post->preview))
                                 <img src="{{ asset($post->preview) }}" alt="Preview">
                             @else
-                                <img src="{{ asset('/images/icons/upload.png') }}" alt="Upload file">
+                                <img src="{{ asset('/vendor/elfcms/blog/admin/images/icons/upload.png') }}" alt="Upload file">
                             @endif
                             </div>
                             <div class="image-button-text">
@@ -114,7 +114,7 @@
                             @if (!empty($post->image))
                                 <img src="{{ asset($post->image) }}" alt="Image">
                             @else
-                                <img src="{{ asset('/images/icons/upload.png') }}" alt="Upload file">
+                                <img src="{{ asset('/vendor/elfcms/blog/admin/images/icons/upload.png') }}" alt="Upload file">
                             @endif
                             </div>
                             <div class="image-button-text">

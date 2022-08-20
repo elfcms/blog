@@ -28,7 +28,7 @@ class BlogTagController extends Controller
         }
         $tags = BlogTag::orderBy($order, $trend)->paginate(30);
 
-        return view('admin.blog.tags.index',[
+        return view('blog::admin.blog.tags.index',[
             'page' => [
                 'title' => 'Tags',
                 'current' => url()->current(),
@@ -44,7 +44,7 @@ class BlogTagController extends Controller
      */
     public function create()
     {
-        return view('admin.blog.tags.create',[
+        return view('blog::admin.blog.tags.create',[
             'page' => [
                 'title' => 'Create tag',
                 'current' => url()->current(),
@@ -62,7 +62,7 @@ class BlogTagController extends Controller
     {
         //return $request->toArray();
         $validated = $request->validate([
-            'name' => 'required|unique:App\Models\BlogTag,name'
+            'name' => 'required|unique:Elfcms\Blog\Models\BlogTag,name'
         ]);
         $tag = BlogTag::create($validated);
 
@@ -103,7 +103,7 @@ class BlogTagController extends Controller
     public function edit(BlogTag $tag)
     {
 
-        return view('admin.blog.tags.edit',[
+        return view('blog::admin.blog.tags.edit',[
             'page' => [
                 'title' => 'Edit tag #' . $tag->id,
                 'current' => url()->current(),

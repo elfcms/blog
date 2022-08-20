@@ -171,7 +171,7 @@
             </div>
         @endif
     </div>
-    {{$posts->links('admin.layouts.pagination')}}
+    {{$posts->links('basic::admin.layouts.pagination')}}
 
     <script>
         const checkForms = document.querySelectorAll('form[data-submit="check"]')

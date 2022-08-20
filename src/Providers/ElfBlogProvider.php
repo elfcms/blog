@@ -53,6 +53,7 @@ class ElfBlogProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'blog');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'blog');
 
         //$this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'blog');
 
@@ -65,7 +66,7 @@ class ElfBlogProvider extends ServiceProvider
         ]);
 
         $this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/vendor/blog'),
+            __DIR__.'/../resources/lang' => resource_path('lang/vendor/elfcms/blog'),
         ]);
 
         $this->publishes([

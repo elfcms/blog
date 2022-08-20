@@ -40,7 +40,7 @@ class BlogCategoryController extends Controller
             $categories = BlogCategory::flat(trend: $trend, order: $order, count: $count, search: $search);
         }
 
-        return view('admin.blog.categories.index',[
+        return view('blog::admin.blog.categories.index',[
             'page' => [
                 'title' => 'Blog categories',
                 'current' => url()->current(),
@@ -58,7 +58,7 @@ class BlogCategoryController extends Controller
     public function create()
     {
         $categories = BlogCategory::all();
-        return view('admin.blog.categories.create',[
+        return view('blog::admin.blog.categories.create',[
             'page' => [
                 'title' => 'Create category',
                 'current' => url()->current(),
@@ -80,7 +80,7 @@ class BlogCategoryController extends Controller
         ]);
         $validated = $request->validate([
             'name' => 'required',
-            'slug' => 'required|unique:App\Models\BlogCategory,slug',
+            'slug' => 'required|unique:Elfcms\Blog\Models\BlogCategory,slug',
             'image' => 'nullable|file|max:512',
             'preview' => 'nullable|file|max:256'
         ]);
@@ -166,7 +166,7 @@ class BlogCategoryController extends Controller
         }
         $exclude =BlogCategory::childrenid($category->id,true);
         $categories = BlogCategory::whereNotIn('id',$exclude)->get();
-        return view('admin.blog.categories.edit',[
+        return view('blog::admin.blog.categories.edit',[
             'page' => [
                 'title' => 'Edit category #' . $category->id,
                 'current' => url()->current(),
@@ -198,7 +198,7 @@ class BlogCategoryController extends Controller
             ]);
             $validated = $request->validate([
                 'name' => 'required',
-                //'slug' => 'required|unique:App\Models\BlogCategory,slug',
+                //'slug' => 'required|unique:Elfcms\Blog\Models\BlogCategory,slug',
                 'slug' => 'required',
                 'image' => 'nullable|file|max:512',
                 'preview' => 'nullable|file|max:256'

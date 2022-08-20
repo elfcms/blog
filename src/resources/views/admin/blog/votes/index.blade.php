@@ -99,7 +99,7 @@
             </tbody>
         </table>
     </div>
-    {{$votes->links('admin.layouts.pagination')}}
+    {{$votes->links('basic::admin.layouts.pagination')}}
 
     <script>
         const checkForms = document.querySelectorAll('form[data-submit="check"]')

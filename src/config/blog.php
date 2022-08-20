@@ -36,19 +36,39 @@ return [
         [
             "title" => "Blog",
             "lang_title" => "blog::elf.blog",
-            "route" => "admin.blog.posts",
+            "route" => "admin.blog",
             "parent_route" => "admin.blog",
             "icon" => "/vendor/elfcms/blog/admin/images/icons/blog.png",
             "submenu" => [
                 [
                     "title" => "Categories",
-                    "lang_title" => "blog::elf.users",
-                    "route" => "admin.users"
+                    "lang_title" => "blog::elf.categories",
+                    "route" => "admin.blog.categories"
                 ],
                 [
                     "title" => "Posts",
-                    "lang_title" => "blog::elf.roles",
-                    "route" => "admin.users.roles"
+                    "lang_title" => "blog::elf.posts",
+                    "route" => "admin.blog.posts"
+                ],
+                [
+                    "title" => "Tags",
+                    "lang_title" => "blog::elf.tags",
+                    "route" => "admin.blog.tags"
+                ],
+                [
+                    "title" => "Comments",
+                    "lang_title" => "blog::elf.comments",
+                    "route" => "admin.blog.comments"
+                ],
+                [
+                    "title" => "Votes",
+                    "lang_title" => "blog::elf.votes",
+                    "route" => "admin.blog.votes"
+                ],
+                [
+                    "title" => "Likes",
+                    "lang_title" => "blog::elf.likes",
+                    "route" => "admin.blog.likes"
                 ],
             ]
         ],

@@ -56,7 +56,7 @@ class BlogCommentController extends Controller
 
         }
 
-        return view('admin.blog.comments.index',[
+        return view('blog::admin.blog.comments.index',[
             'page' => [
                 'title' => 'Comments',
                 'current' => url()->current(),
@@ -78,7 +78,7 @@ class BlogCommentController extends Controller
     {
         $posts = BlogPost::all();
         $comments = BlogComment::all();
-        return view('admin.blog.comments.create',[
+        return view('blog::admin.blog.comments.create',[
             'page' => [
                 'title' => 'Create comment',
                 'current' => url()->current(),
@@ -146,7 +146,7 @@ class BlogCommentController extends Controller
     {
         $posts = BlogPost::all();
         $comments = BlogComment::all();
-        return view('admin.blog.comments.edit',[
+        return view('blog::admin.blog.comments.edit',[
             'page' => [
                 'title' => 'Edit comment',
                 'current' => url()->current(),
