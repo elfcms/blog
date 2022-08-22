@@ -85,6 +85,7 @@ class ElfBlogProvider extends ServiceProvider
         }
         if ($firstStart) {
             Artisan::call('vendor:publish',['--provider'=>'Elfcms\Blog\Providers\ElfBlogProvider','--force'=>true]);
+            Artisan::call('migrate');
             if (unlink($startFile)) {
                 //
             }
