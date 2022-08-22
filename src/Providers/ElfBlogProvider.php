@@ -6,6 +6,7 @@ use Elfcms\Basic\Http\Middleware\AccountUser;
 use Elfcms\Basic\Http\Middleware\AdminUser;
 use Elfcms\Basic\Http\Middleware\CookieCheck;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
@@ -72,6 +73,25 @@ class ElfBlogProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../public' => public_path('vendor/elfcms/blog'),
         ], 'public');
+
+        $startFile = __DIR__.'/../../start.json';
+        $firstStart = false;
+        if (file_exists($startFile)) {
+            $json = File::get($startFile);
+            $fileArray = json_decode($json,true);
+            if ($fileArray['first_run']) {
+                $firstStart = true;
+            }
+        }
+        if ($firstStart) {
+            Artisan::call('vendor:publish',['--provider'=>'Elfcms\Blog\Providers\ElfBlogProvider','--force'=>true]);
+            if (unlink($startFile)) {
+                //
+            }
+            elseif (!empty($fileArray)) {
+                file_put_contents($startFile,json_encode($fileArray));
+            }
+        }
 
         $router->middlewareGroup('admin', array(
             AdminUser::class
