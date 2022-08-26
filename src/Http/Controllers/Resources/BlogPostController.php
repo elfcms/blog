@@ -225,11 +225,11 @@ class BlogPostController extends Controller
             $image_path = $request->image_path;
             $preview_path = $request->preview_path;
             if (!empty($request->file()['image'])) {
-                $image = $request->file()['image']->store('public/blog/categories/image');
+                $image = $request->file()['image']->store('public/blog/posts/image');
                 $image_path = str_ireplace('public/','/storage/',$image);
             }
             if (!empty($request->file()['preview'])) {
-                $preview = $request->file()['preview']->store('public/blog/categories/preview');
+                $preview = $request->file()['preview']->store('public/blog/posts/preview');
                 $preview_path = str_ireplace('public/','/storage/',$preview);
             }
 
