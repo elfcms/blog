@@ -193,6 +193,20 @@
     autoSlug('.autoslug')
 
     tagFormInit()
+
+    tinymce.init({
+      selector: 'textarea#description',
+      plugins: ' advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinymcespellchecker',
+      toolbar: 'undo redo styleselect bold italic link image alignleft aligncenter alignright permanentpen table tableofcontents',
+      toolbar_mode: 'floating',
+    });
+
+    tinymce.init({
+      selector: 'textarea#text',
+      plugins: ' advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinymcespellchecker',
+      toolbar: 'undo redo styleselect bold italic link image alignleft aligncenter alignright permanentpen table tableofcontents',
+      toolbar_mode: 'floating',
+    });
     </script>
 
 @endsection
