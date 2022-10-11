@@ -126,7 +126,7 @@
                 <div class="input-box colored">
                     <label for="meta_keywords">{{ __('basic::elf.meta_keywords') }}</label>
                     <div class="input-wrapper">
-                        <textarea name="meta_keywords" id="meta_keywords" cols="30" rows="3"></textarea>
+                        <textarea name="meta_keywords" id="meta_keywords" cols="30" rows="3" data-editor="quill"></textarea>
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -167,20 +167,9 @@
     autoSlug('.autoslug')
 
     tagFormInit()
-
-    tinymce.init({
-      selector: 'textarea#description',
-      plugins: ' advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinymcespellchecker',
-      toolbar: 'undo redo styleselect bold italic link image alignleft aligncenter alignright permanentpen table tableofcontents',
-      toolbar_mode: 'floating',
-    });
-
-    tinymce.init({
-      selector: 'textarea#text',
-      plugins: ' advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinymcespellchecker',
-      toolbar: 'undo redo styleselect bold italic link image alignleft aligncenter alignright permanentpen table tableofcontents',
-      toolbar_mode: 'floating',
-    });
+    //add editor
+    runEditor('#description')
+    runEditor('#text')
     </script>
 
 @endsection
