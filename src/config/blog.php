@@ -39,6 +39,7 @@ return [
             "route" => "admin.blog",
             "parent_route" => "admin.blog",
             "icon" => "/vendor/elfcms/blog/admin/images/icons/blog.png",
+            "position" => 80,
             "submenu" => [
                 [
                     "title" => "Categories",
