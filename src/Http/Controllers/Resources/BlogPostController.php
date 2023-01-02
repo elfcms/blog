@@ -120,7 +120,6 @@ class BlogPostController extends Controller
             $end_time .= ' '.$request->end_time[1];
         }
 
-
         $validated['image'] = $image_path;
         $validated['preview'] = $preview_path;
         $validated['description'] = $request->description;
