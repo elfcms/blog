@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'version' => '0.4',
+    'version' => '0.5',
 
     /*
     |--------------------------------------------------------------------------
@@ -41,6 +41,11 @@ return [
             "icon" => "/vendor/elfcms/blog/admin/images/icons/blog.png",
             "position" => 80,
             "submenu" => [
+                [
+                    "title" => "Blogs",
+                    "lang_title" => "blog::elf.blogs",
+                    "route" => "admin.blog.blogs"
+                ],
                 [
                     "title" => "Categories",
                     "lang_title" => "blog::elf.categories",

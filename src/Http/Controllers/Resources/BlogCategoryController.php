@@ -3,6 +3,7 @@
 namespace Elfcms\Blog\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
+use Elfcms\Blog\Models\Blog;
 use Elfcms\Blog\Models\BlogCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,12 +59,14 @@ class BlogCategoryController extends Controller
     public function create()
     {
         $categories = BlogCategory::all();
+        $blogs = Blog::all();
         return view('blog::admin.blog.categories.create',[
             'page' => [
                 'title' => 'Create category',
                 'current' => url()->current(),
             ],
-            'categories' => $categories
+            'categories' => $categories,
+            'blogs' => $blogs,
         ]);
     }
 
@@ -114,6 +117,7 @@ class BlogCategoryController extends Controller
             $end_time .= ' '.$request->end_time[1];
         }
 
+        $validated['blog_id'] = $request->blog_id ?? null;
         $validated['image'] = $image_path;
         $validated['preview'] = $preview_path;
         $validated['description'] = $request->description;
@@ -166,6 +170,7 @@ class BlogCategoryController extends Controller
         }
         $exclude =BlogCategory::childrenid($category->id,true);
         $categories = BlogCategory::whereNotIn('id',$exclude)->get();
+        $blogs = Blog::all();
         return view('blog::admin.blog.categories.edit',[
             'page' => [
                 'title' => 'Edit category #' . $category->id,
@@ -173,6 +178,7 @@ class BlogCategoryController extends Controller
             ],
             'category' => $category,
             'categories' => $categories,
+            'blogs' => $blogs,
         ]);
     }
 
@@ -239,6 +245,7 @@ class BlogCategoryController extends Controller
 
             $category->name = $validated['name'];
             $category->slug = $validated['slug'];
+            $category->blog_id = $request->blog_id ?? null;
             $category->parent_id = $request->parent_id;
             $category->image = $image_path;
             $category->preview = $preview_path;

@@ -2,8 +2,8 @@
 
 @section('blogpage-content')
 
-    @if (Session::has('categoryedited'))
-        <div class="alert alert-success">{{ Session::get('categoryedited') }}</div>
+    @if (Session::has('result'))
+        <div class="alert alert-success">{{ Session::get('result') }}</div>
     @endif
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -16,11 +16,18 @@
     @endif
 
     <div class="item-form">
-        <h3>{{ __('basic::elf.create_category') }}</h3>
-        <form action="{{ route('admin.blog.categories.store') }}" method="POST" enctype="multipart/form-data">
+        <h3>{{ __('basic::elf.edit_blog') }}{{ $blog->id }}</h3>
+        <div class="date-info create-info">
+            {{ __('basic::elf.created_at') }}: {{ $blog->created }}
+        </div>
+        <div class="date-info update-info">
+            {{ __('basic::elf.updated_at') }}: {{ $blog->updated }}
+        </div>
+        <form action="{{ route('admin.blog.blogs.update',$blog->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('POST')
+            @method('PUT')
             <div class="colored-rows-box">
+                <input type="hidden" name="id" id="id" value="{{ $blog->id }}">
                 <div class="input-box colored">
                     <div class="checkbox-wrapper">
                         <div class="checkbox-inner">
@@ -28,7 +35,9 @@
                                 type="checkbox"
                                 name="active"
                                 id="active"
+                                @if ($blog->active == 1)
                                 checked
+                                @endif
                             >
                             <i></i>
                             <label for="active">
@@ -38,37 +47,15 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="blog_id">{{ __('blog::elf.blog') }}</label>
-                    <div class="input-wrapper">
-                        <select name="blog_id" id="blog_id" data-dep="blog" data-rule="blog">
-                        @foreach ($blogs as $blog)
-                            <option value="{{ $blog->id }}" @class(['inactive' => $blog->active != 1])>{{ $blog->name }}@if ($blog->active != 1) [{{ __('basic::elf.inactive') }}] @endif</option>
-                        @endforeach
-                            <option value="">{{ __('basic::elf.none') }}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-box colored">
-                    <label for="parent_id">{{ __('basic::elf.parent') }}</label>
-                    <div class="input-wrapper">
-                        <select name="parent_id" id="parent_id" data-cond="blog">
-                            <option value="">{{ __('basic::elf.none') }}</option>
-                        @foreach ($categories as $item)
-                            <option value="{{ $item->id }}" @class(['inactive' => $item->active != 1]) data-blog="{{ $item->blog_id }}">{{ $item->name }}@if ($item->active != 1) [{{ __('basic::elf.inactive') }}] @endif</option>
-                        @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="input-box colored">
                     <label for="name">{{ __('basic::elf.name') }}</label>
                     <div class="input-wrapper">
-                        <input type="text" name="name" id="name" autocomplete="off">
+                        <input type="text" name="name" id="name" autocomplete="off" value="{{ $blog->name }}">
                     </div>
                 </div>
                 <div class="input-box colored">
                     <label for="slug">{{ __('basic::elf.slug') }}</label>
                     <div class="input-wrapper">
-                        <input type="text" name="slug" id="slug" autocomplete="off">
+                        <input type="text" name="slug" id="slug" autocomplete="off" value="{{ $blog->slug }}">
                     </div>
                     <div class="input-wrapper">
                         <div class="autoslug-wrapper">
@@ -80,20 +67,28 @@
                 <div class="input-box colored">
                     <label for="desctiption">{{ __('basic::elf.description') }}</label>
                     <div class="input-wrapper">
-                        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                        <textarea name="description" id="description" cols="30" rows="10">{{ $blog->description }}</textarea>
                     </div>
                 </div>
                 <div class="input-box colored">
                     <label for="preview">{{ __('basic::elf.preview') }}</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="preview_path" id="preview_path">
+                        <input type="hidden" name="preview_path" id="preview_path" value="{{$blog->preview}}">
                         <div class="image-button">
-                            <div class="delete-image hidden">&#215;</div>
+                            <div class="delete-image @if (empty($blog->preview)) hidden @endif">&#215;</div>
                             <div class="image-button-img">
+                            @if (!empty($blog->image))
+                                <img src="{{ asset($blog->preview) }}" alt="Preview">
+                            @else
                                 <img src="{{ asset('/vendor/elfcms/blog/admin/images/icons/upload.png') }}" alt="Upload file">
+                            @endif
                             </div>
                             <div class="image-button-text">
+                            @if (!empty($blog->image))
+                                {{ __('basic::elf.change_file') }}
+                            @else
                                 {{ __('basic::elf.choose_file') }}
+                            @endif
                             </div>
                             <input type="file" name="preview" id="preview">
                         </div>
@@ -102,43 +97,37 @@
                 <div class="input-box colored">
                     <label for="image">{{ __('basic::elf.image') }}</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="image_path" id="image_path">
+                        <input type="hidden" name="image_path" id="image_path" value="{{$blog->image}}">
                         <div class="image-button">
-                            <div class="delete-image hidden">&#215;</div>
+                            <div class="delete-image @if (empty($blog->image)) hidden @endif">&#215;</div>
                             <div class="image-button-img">
+                            @if (!empty($blog->image))
+                                <img src="{{ asset($blog->image) }}" alt="Image">
+                            @else
                                 <img src="{{ asset('/vendor/elfcms/blog/admin/images/icons/upload.png') }}" alt="Upload file">
+                            @endif
                             </div>
                             <div class="image-button-text">
+                            @if (!empty($blog->image))
+                                {{ __('basic::elf.change_file') }}
+                            @else
                                 {{ __('basic::elf.choose_file') }}
+                            @endif
                             </div>
                             <input type="file" name="image" id="image">
                         </div>
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="public_time">{{ __('basic::elf.public_time') }}</label>
-                    <div class="input-wrapper">
-                        <input type="date" name="public_time[]" id="public_time" autocomplete="off">
-                        <input type="time" name="public_time[]" id="public_time_time" autocomplete="off">
-                    </div>
-                </div>
-                <div class="input-box colored">
-                    <label for="end_time">{{ __('basic::elf.end_time') }}</label>
-                    <div class="input-wrapper">
-                        <input type="date" name="end_time[]" id="end_time" autocomplete="off">
-                        <input type="time" name="end_time[]" id="end_time_time" autocomplete="off">
-                    </div>
-                </div>
-                <div class="input-box colored">
                     <label for="meta_keywords">{{ __('basic::elf.meta_keywords') }}</label>
                     <div class="input-wrapper">
-                        <textarea name="meta_keywords" id="meta_keywords" cols="30" rows="3"></textarea>
+                        <textarea name="meta_keywords" id="meta_keywords" cols="30" rows="3">{{ $blog->meta_keywords }}</textarea>
                     </div>
                 </div>
                 <div class="input-box colored">
                     <label for="meta_description">{{ __('basic::elf.meta_description') }}</label>
                     <div class="input-wrapper">
-                        <textarea name="meta_description" id="meta_description" cols="30" rows="3"></textarea>
+                        <textarea name="meta_description" id="meta_description" cols="30" rows="3">{{ $blog->meta_description }}</textarea>
                     </div>
                 </div>
             </div>
@@ -156,10 +145,10 @@
     if (previewInput) {
         inputFileImg(previewInput)
     }
+
     autoSlug('.autoslug')
     //add editor
     runEditor('#description')
-    selectCondition('blog');
     </script>
 
 @endsection

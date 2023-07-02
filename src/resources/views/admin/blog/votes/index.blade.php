@@ -1,4 +1,4 @@
-@extends('basic::admin.layouts.blog')
+@extends('blog::admin.layouts.blog')
 
 @section('blogpage-content')
 

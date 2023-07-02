@@ -14,6 +14,7 @@ class BlogPost extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'blog_id',
         'name',
         'slug',
         'category_id',
@@ -23,14 +24,26 @@ class BlogPost extends Model
         'text',
         'active',
         'public_time',
-        'end_time'
+        'end_time',
+        'meta_keywords',
+        'meta_description'
     ];
 
     public $vote, $userVote = 0, $like, $userLike = 0;
 
-    public function category()
+    public function blog()
+    {
+        return $this->belongsTo(Blog::class, 'blog_id');
+    }
+
+    /* public function category()
     {
         return $this->belongsTo(BlogCategory::class, 'category_id');
+    } */
+
+    public function categories()
+    {
+        return $this->belongsToMany(BlogCategory::class, 'blog_post_categories', 'blog_posts_id', 'blog_categories_id');
     }
 
     public function tags()

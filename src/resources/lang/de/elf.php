@@ -53,4 +53,5 @@ return [
     'error_of_tag_edited' => 'Fehler bei der Tag-Bearbeitung',
     'blog' => 'Blog',
     'blogs' => 'Blogs',
+    'create_blog' => 'Einen Blog erstellen',
 ];

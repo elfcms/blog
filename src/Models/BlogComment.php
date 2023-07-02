@@ -12,11 +12,17 @@ class BlogComment extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'blog_id',
         'post_id',
         'parent_id',
         'user_id',
         'text'
     ];
+
+    public function blog()
+    {
+        return $this->belongsTo(Blog::class, 'blog_id');
+    }
 
     public static function tree($parent = null)
     {

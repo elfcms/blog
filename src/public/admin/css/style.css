@@ -75,7 +75,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: #032a49;
-  background-image: url(/images/a003-min.jpg);
+  background-image: url(../images/a003-min.jpg);
   background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
@@ -421,7 +421,7 @@ textarea {
   height: 30px;
   padding: 0;
   box-sizing: border-box;
-  background-image: url("/images/non-text-button.png");
+  background-image: url("../images/non-text-button.png");
   background-repeat: no-repeat;
 }
 .non-text-buttons .default-btn.edit-button {
@@ -433,15 +433,15 @@ textarea {
 .non-text-buttons .default-btn.deactivate-button {
   background-position: -2px -34px;
   background-color: #849aab;
-  background-image: url("/images/non-text-button-light.png");
+  background-image: url("../images/non-text-button-light.png");
 }
 .non-text-buttons .default-btn.delete-button {
   background-position: -2px -66px;
-  background-image: url("/images/non-text-button-light.png");
+  background-image: url("../images/non-text-button-light.png");
 }
 .non-text-buttons .default-btn.submit-button.create-button {
   background-position: -2px -98px;
-  background-image: url("/images/non-text-button-light.png");
+  background-image: url("../images/non-text-button-light.png");
 }
 .non-text-buttons .default-btn.search-button {
   background-position: -2px -130px;

@@ -3,6 +3,7 @@
 namespace Elfcms\Blog\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
+use Elfcms\Blog\Models\Blog;
 use Elfcms\Blog\Models\BlogCategory;
 use Elfcms\Blog\Models\BlogPost;
 use Illuminate\Http\Request;
@@ -42,6 +43,9 @@ class BlogPostController extends Controller
 
         }
 
+        $categories = BlogCategory::all();
+        $blogs = Blog::all();
+
         return view('blog::admin.blog.posts.index',[
             'page' => [
                 'title' => 'Posts',
@@ -50,7 +54,9 @@ class BlogPostController extends Controller
             'posts' => $posts,
             'category' => $category,
             'params' => $request->all(),
-            'search' => $search
+            'search' => $search,
+            'categories' => $categories,
+            'blogs' => $blogs,
         ]);
     }
 
@@ -62,13 +68,15 @@ class BlogPostController extends Controller
     public function create(Request $request)
     {
         $categories = BlogCategory::all();
+        $blogs = Blog::all();
         return view('blog::admin.blog.posts.create',[
             'page' => [
                 'title' => 'Create post',
                 'current' => url()->current(),
             ],
             'categories' => $categories,
-            'category_id' => $request->category_id
+            'category_id' => $request->category_id,
+            'blogs' => $blogs,
         ]);
     }
 
@@ -84,7 +92,7 @@ class BlogPostController extends Controller
             'slug' => Str::slug($request->slug),
         ]);
         $validated = $request->validate([
-            'category_id' => 'required',
+            //'category_id' => 'required',
             'name' => 'required',
             'slug' => 'required|unique:Elfcms\Blog\Models\BlogPost,slug',
             'image' => 'nullable|file|max:512',
@@ -120,6 +128,8 @@ class BlogPostController extends Controller
             $end_time .= ' '.$request->end_time[1];
         }
 
+        $validated['category_id'] = $request->category_id ?? null;
+        $validated['blog_id'] = $request->blog_id ?? null;
         $validated['image'] = $image_path;
         $validated['preview'] = $preview_path;
         $validated['description'] = $request->description;
@@ -178,13 +188,20 @@ class BlogPostController extends Controller
             $post->updated = date('d.m.Y H:i:s',strtotime($post->updated_at));
         }
         $categories = BlogCategory::all();
+        $postCategories = [];
+        foreach ($post->categories as $category) {
+            $postCategories[] = $category->id;
+        }
+        $blogs = Blog::all();
         return view('blog::admin.blog.posts.edit',[
             'page' => [
                 'title' => 'Edit post #' . $post->id,
                 'current' => url()->current(),
             ],
             'post' => $post,
-            'categories' => $categories
+            'categories' => $categories,
+            'blogs' => $blogs,
+            'postCategories' => $postCategories
         ]);
     }
 
@@ -209,7 +226,7 @@ class BlogPostController extends Controller
                 'slug' => Str::slug($request->slug),
             ]);
             $validated = $request->validate([
-                'category_id' => 'required',
+                //'category_id' => 'required',
                 'name' => 'required',
                 //'slug' => 'required|unique:Elfcms\Blog\Models\BlogPost,slug',
                 'image' => 'nullable|file|max:512',
@@ -271,7 +288,9 @@ class BlogPostController extends Controller
             //dd($image_path);
             //dd($preview_path);
 
-            $post->category_id = $validated['category_id'];
+            //$post->category_id = $request->category_id ?? null;
+            $post->blog_id = $request->blog_id ?? null;
+            //$post->category_id = $validated['category_id'];
             $post->name = $validated['name'];
             $post->slug = $request->slug;
             $post->image = $image_path;
@@ -283,6 +302,8 @@ class BlogPostController extends Controller
             $post->end_time = $end_time;
             $post->meta_keywords = $request->meta_keywords;
             $post->meta_description = $request->meta_description;
+
+            $post->categories()->sync($request->categories ?? []);
 
             $existTags = $post->tags->toArray();
 
@@ -304,9 +325,6 @@ class BlogPostController extends Controller
                     $post->tags()->attach($tagId);
                 }
             }
-
-            //dd($existTags);
-            //dd($newTags);
 
             $post->save();
 

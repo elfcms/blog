@@ -53,4 +53,6 @@ return [
     'error_of_tag_edited' => 'Error of tag editing',
     'blog' => 'Blog',
     'blogs' => 'Blogs',
+    'create_blog' => 'Create a blog',
+
 ];

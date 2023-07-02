@@ -1,4 +1,4 @@
-@extends('basic::admin.layouts.blog')
+@extends('blog::admin.layouts.blog')
 
 @section('blogpage-content')
 
@@ -50,13 +50,24 @@
                     </div>
                 </div>
                 <div class="input-box colored">
+                    <label for="blog_id">{{ __('blog::elf.blog') }}</label>
+                    <div class="input-wrapper">
+                        <select name="blog_id" id="blog_id" data-dep="blog" data-rule="blog">
+                            <option value="">{{ __('basic::elf.none') }}</option>
+                        @foreach ($blogs as $blog)
+                            <option value="{{ $blog->id }}" @class(['inactive' => $blog->active != 1]) @if ($blog->id == $category->blog_id) selected @endif>{{ $blog->name }}@if ($blog->active != 1) [{{ __('basic::elf.inactive') }}] @endif</option>
+                        @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box colored">
                     <label for="parent_id">{{ __('basic::elf.parent') }}</label>
                     <div class="input-wrapper">
-                        <select name="parent_id" id="parent_id">
+                        <select name="parent_id" id="parent_id" data-cond="blog">
                             <option value="">{{ __('basic::elf.none') }}</option>
                         @foreach ($categories as $item)
                             @if ($item->id != $category->id)
-                                <option value="{{ $item->id }}" @if ($item->active != 1) class="inactive" @endif @if ($item->id == $category->parent_id) selected @endif>{{ $item->name }}@if ($item->active != 1) [{{ __('basic::elf.inactive') }}] @endif</option>
+                                <option value="{{ $item->id }}" @class(['inactive' => $item->active != 1, 'hidden' => $item->blog_id != $category->blog_id]) data-blog="{{ $item->blog_id }}" @if ($item->id == $category->parent_id) selected @endif>{{ $item->name }}@if ($item->active != 1) [{{ __('basic::elf.inactive') }}] @endif</option>
                             @endif
                         @endforeach
                         </select>
@@ -179,6 +190,7 @@
     autoSlug('.autoslug')
     //add editor
     runEditor('#description')
+    selectCondition('blog');
     </script>
 
 @endsection

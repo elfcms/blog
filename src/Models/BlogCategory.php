@@ -12,6 +12,7 @@ class BlogCategory extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'blog_id',
         'name',
         'slug',
         'parent_id',
@@ -20,7 +21,9 @@ class BlogCategory extends Model
         'description',
         'active',
         'public_time',
-        'end_time'
+        'end_time',
+        'meta_keywords',
+        'meta_description'
     ];
 
     public static function tree($parent = null)
@@ -128,9 +131,19 @@ class BlogCategory extends Model
         return $result;
     }
 
-    public function posts ()
+    public function blog()
+    {
+        return $this->belongsTo(Blog::class, 'blog_id');
+    }
+
+    /* public function posts ()
     {
         return $this->hasMany(BlogPost::class, 'category_id');
+    } */
+
+    public function posts()
+    {
+        return $this->belongsToMany(BlogPost::class, 'blog_post_categories', 'blog_posts_id', 'blog_categories_id');
     }
 
 

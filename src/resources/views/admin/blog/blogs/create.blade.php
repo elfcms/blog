@@ -1,9 +1,9 @@
-@extends('blog::admin.layouts.blog')
+@extends('basic::admin.layouts.blog')
 
 @section('blogpage-content')
 
-    @if (Session::has('postedited'))
-        <div class="alert alert-success">{{ Session::get('postedited') }}</div>
+    @if (Session::has('result'))
+        <div class="alert alert-success">{{ Session::get('result') }}</div>
     @endif
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -16,8 +16,8 @@
     @endif
 
     <div class="item-form">
-        <h3>{{ __('basic::elf.create_post') }}</h3>
-        <form action="{{ route('admin.blog.posts.store') }}" method="POST" enctype="multipart/form-data">
+        <h3>{{ __('blog::elf.create_blog') }}</h3>
+        <form action="{{ route('admin.blog.blogs.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="colored-rows-box">
@@ -35,28 +35,6 @@
                                 {{ __('basic::elf.active') }}
                             </label>
                         </div>
-                    </div>
-                </div>
-                <div class="input-box colored">
-                    <label for="blog_id">{{ __('blog::elf.blog') }}</label>
-                    <div class="input-wrapper">
-                        <select name="blog_id" id="blog_id" data-dep="blog" data-rule="blog" multiple>
-                        @foreach ($blogs as $blog)
-                            <option value="{{ $blog->id }}" @class(['inactive' => $blog->active != 1])>{{ $blog->name }}@if ($blog->active != 1) [{{ __('basic::elf.inactive') }}] @endif</option>
-                        @endforeach
-                            <option value="">{{ __('basic::elf.none') }}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-box colored">
-                    <label for="category_id">{{ __('basic::elf.category') }}</label>
-                    <div class="input-wrapper">
-                        <select name="category_id" id="category_id" data-cond="blog" multiple>
-                            <option value="">{{ __('basic::elf.none') }}</option>
-                        @foreach ($categories as $item)
-                            <option value="{{ $item->id }}"  @class(['inactive' => $item->active != 1, 'hidden' => (!empty($blogs) && $item->blog_id != $blogs[0]->id)]) data-blog="{{ $item->blog_id }}" @if ($item->id == $category_id) selected @endif>{{ $item->name }}@if ($item->active != 1) [{{ __('basic::elf.inactive') }}] @endif</option>
-                        @endforeach
-                        </select>
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -81,12 +59,6 @@
                     <label for="desctiption">{{ __('basic::elf.description') }}</label>
                     <div class="input-wrapper">
                         <textarea name="description" id="description" cols="30" rows="10"></textarea>
-                    </div>
-                </div>
-                <div class="input-box colored">
-                    <label for="text">{{ __('basic::elf.text') }}</label>
-                    <div class="input-wrapper">
-                        <textarea name="text" id="text" cols="30" rows="10"></textarea>
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -122,43 +94,15 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="public_time">{{ __('basic::elf.public_time') }}</label>
-                    <div class="input-wrapper">
-                        <input type="date" name="public_time[]" id="public_time" autocomplete="off">
-                        <input type="time" name="public_time[]" id="public_time_time" autocomplete="off">
-                    </div>
-                </div>
-                <div class="input-box colored">
-                    <label for="end_time">{{ __('basic::elf.end_time') }}</label>
-                    <div class="input-wrapper">
-                        <input type="date" name="end_time[]" id="end_time" autocomplete="off">
-                        <input type="time" name="end_time[]" id="end_time_time" autocomplete="off">
-                    </div>
-                </div>
-                <div class="input-box colored">
                     <label for="meta_keywords">{{ __('basic::elf.meta_keywords') }}</label>
                     <div class="input-wrapper">
-                        <textarea name="meta_keywords" id="meta_keywords" cols="30" rows="3" data-editor="quill"></textarea>
+                        <textarea name="meta_keywords" id="meta_keywords" cols="30" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="input-box colored">
                     <label for="meta_description">{{ __('basic::elf.meta_description') }}</label>
                     <div class="input-wrapper">
                         <textarea name="meta_description" id="meta_description" cols="30" rows="3"></textarea>
-                    </div>
-                </div>
-
-                <div class="input-box colored">
-                    <label for="tags">{{ __('basic::elf.tags') }}</label>
-                    <div class="input-wrapper">
-                        <div class="tag-form-wrapper">
-                            <div class="tag-list-box"></div>
-                            <div class="tag-input-box">
-                                <input type="text" class="tag-input" autocomplete="off">
-                                <button type="button" class="default-btn tag-add-button">Add</button>
-                                <div class="tag-prompt-list"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -177,12 +121,8 @@
         inputFileImg(previewInput)
     }
     autoSlug('.autoslug')
-
-    tagFormInit()
     //add editor
     runEditor('#description')
-    runEditor('#text')
-    selectCondition('blog');
     </script>
 
 @endsection

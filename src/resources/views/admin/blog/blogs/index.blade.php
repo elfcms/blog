@@ -5,10 +5,10 @@
     <div class="table-search-box">
         <div class="table-search-result-title">
             @if (!empty($search))
-                {{ __('basic::elf.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.blog.categories') }}" title="{{ __('basic::elf.reset_search') }}">&#215;</a>
+                {{ __('basic::elf.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.blog.blogs') }}" title="{{ __('basic::elf.reset_search') }}">&#215;</a>
             @endif
         </div>
-        <form action="{{ route('admin.blog.categories') }}" method="get">
+        <form action="{{ route('admin.blog.blogs') }}" method="get">
             <div class="input-box">
                 <label for="search">
                     {{ __('basic::elf.search') }}
@@ -38,70 +38,50 @@
     </div>
     @endif
     <div class="widetable-wrapper">
-        <table class="grid-table categorytable">
+        <table class="grid-table blogtable">
             <thead>
                 <tr>
                     <th>
                         ID
-                        <a href="{{ route('admin.blog.categories',UrlParams::addArr(['order'=>'id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.blog.blogs',UrlParams::addArr(['order'=>'id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('basic::elf.name') }}
-                        <a href="{{ route('admin.blog.categories',UrlParams::addArr(['order'=>'name','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['name'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.blog.blogs',UrlParams::addArr(['order'=>'name','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['name'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('basic::elf.slug') }}
-                        <a href="{{ route('admin.blog.categories',UrlParams::addArr(['order'=>'slug','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['slug'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.blog.blogs',UrlParams::addArr(['order'=>'slug','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['slug'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
-                    {{-- <th>{{ __('basic::elf.preview') }}</th>
-                    <th>{{ __('basic::elf.image') }}</th>
-                    <th>{{ __('basic::elf.description') }}</th> --}}
                     <th>
                         {{ __('basic::elf.created') }}
-                        <a href="{{ route('admin.blog.categories',UrlParams::addArr(['order'=>'created_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['created_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.blog.blogs',UrlParams::addArr(['order'=>'created_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['created_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('basic::elf.updated') }}
-                        <a href="{{ route('admin.blog.categories',UrlParams::addArr(['order'=>'updated_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['updated_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
-                    </th>
-                    <th>
-                        {{ __('basic::elf.public_time') }}
-                        <a href="{{ route('admin.blog.categories',UrlParams::addArr(['order'=>'public_time','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['public_time'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
-                    </th>
-                    <th>
-                        {{ __('basic::elf.end_time') }}
-                        <a href="{{ route('admin.blog.categories',UrlParams::addArr(['order'=>'end_time','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['end_time'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.blog.blogs',UrlParams::addArr(['order'=>'updated_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['updated_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('basic::elf.active') }}
-                        <a href="{{ route('admin.blog.categories',UrlParams::addArr(['order'=>'active','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['active'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.blog.blogs',UrlParams::addArr(['order'=>'active','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['active'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-            @foreach ($categories as $category)
-                <tr data-id="{{ $category->id }}" class="level-{{ $category->level }}@empty ($category->active) inactive @endempty">
-                    <td class="subline-{{ $category->level }}">{{ $category->id }}</td>
+            @foreach ($blogs as $blog)
+                <tr data-id="{{ $blog->id }}" @class(['inactive'=>$blog->active])>
+                    <td>{{ $blog->id }}</td>
                     <td>
-                        <a href="{{ route('admin.blog.categories.edit',$category->id) }}">
-                            {{ $category->name }}
+                        <a href="{{ route('admin.blog.blogs.edit',$blog->id) }}">
+                            {{ $blog->name }}
                         </a>
                     </td>
-                    <td>{{ $category->slug }}</td>
-                    {{-- <td class="image-cell">
-                        <img src="{{ asset($category->preview) }}" alt="">
-                    </td>
-                    <td class="image-cell">
-                        <img src="{{ asset($category->image) }}" alt="">
-                    </td>
-                    <td>{{ $category->description }}</td> --}}
-                    <td>{{ $category->created_at }}</td>
-                    <td>{{ $category->updated_at }}</td>
-                    <td>{{ $category->public_time }}</td>
-                    <td>{{ $category->end_time }}</td>
+                    <td>{{ $blog->slug }}</td>
+                    <td>{{ $blog->created_at }}</td>
+                    <td>{{ $blog->updated_at }}</td>
                     <td>
-                    @if ($category->active)
+                    @if ($blog->active)
                         {{ __('basic::elf.active') }}
                     @else
                         {{ __('basic::elf.not_active') }}
@@ -109,54 +89,54 @@
                     </td>
                     <td class="button-column non-text-buttons">
                         <form action="{{ route('admin.blog.posts.create') }}" method="GET">
-                            <input type="hidden" name="category_id" value="{{ $category->id }}">
+                            <input type="hidden" name="category_id" value="{{ $blog->id }}">
                             <button type="submit" class="default-btn submit-button create-button" title="{{ __('basic::elf.add_post') }}"></button>
                         </form>
-                        <a href="{{ route('admin.blog.categories.edit',$category->id) }}" class="default-btn edit-button" title="{{ __('basic::elf.edit') }}"></a>
-                        <form action="{{ route('admin.blog.categories.update',$category->id) }}" method="POST">
+                        <a href="{{ route('admin.blog.blogs.edit',$blog->id) }}" class="default-btn edit-button" title="{{ __('basic::elf.edit') }}"></a>
+                        <form action="{{ route('admin.blog.blogs.update',$blog->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" name="id" id="id" value="{{ $category->id }}">
-                            <input type="hidden" name="active" id="active" value="{{ (int)!(bool)$category->active }}">
+                            <input type="hidden" name="id" id="id" value="{{ $blog->id }}">
+                            <input type="hidden" name="active" id="active" value="{{ (int)!(bool)$blog->active }}">
                             <input type="hidden" name="notedit" value="1">
-                            <button type="submit" @if ($category->active == 1) class="default-btn deactivate-button" title="{{__('basic::elf.deactivate') }}" @else class="default-btn activate-button" title="{{ __('basic::elf.activate') }}" @endif>
+                            <button type="submit" @if ($blog->active == 1) class="default-btn deactivate-button" title="{{__('basic::elf.deactivate') }}" @else class="default-btn activate-button" title="{{ __('basic::elf.activate') }}" @endif>
                             </button>
                         </form>
-                        <form action="{{ route('admin.blog.categories.destroy',$category->id) }}" method="POST" data-submit="check">
+                        <form action="{{ route('admin.blog.blogs.destroy',$blog->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
-                            <input type="hidden" name="id" value="{{ $category->id }}">
-                            <input type="hidden" name="name" value="{{ $category->name }}">
+                            <input type="hidden" name="id" value="{{ $blog->id }}">
+                            <input type="hidden" name="name" value="{{ $blog->name }}">
                             <button type="submit" class="default-btn delete-button" title="{{ __('basic::elf.delete') }}"></button>
                         </form>
                         <div class="contextmenu-content-box">
-                            <a href="{{ route('admin.blog.posts',UrlParams::addArr(['category'=>$category->id])) }}" class="contextmenu-item">
+                            <a href="{{ route('admin.blog.posts',UrlParams::addArr(['category'=>$blog->id])) }}" class="contextmenu-item">
                                 {{ __('basic::elf.show_posts') }}
                             </a>
                             <form action="{{ route('admin.blog.posts.create') }}" method="GET">
-                                <input type="hidden" name="category_id" value="{{ $category->id }}">
+                                <input type="hidden" name="category_id" value="{{ $blog->id }}">
                                 <button type="submit" class="contextmenu-item">{{ __('basic::elf.add_post') }}</button>
                             </form>
-                            <a href="{{ route('admin.blog.categories.edit',$category->id) }}" class="contextmenu-item">{{ __('basic::elf.edit') }}</a>
-                            <form action="{{ route('admin.blog.categories.update',$category->id) }}" method="POST">
+                            <a href="{{ route('admin.blog.blogs.edit',$blog->id) }}" class="contextmenu-item">{{ __('basic::elf.edit') }}</a>
+                            <form action="{{ route('admin.blog.blogs.update',$blog->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-                                <input type="hidden" name="id" id="id" value="{{ $category->id }}">
-                                <input type="hidden" name="active" id="active" value="{{ (int)!(bool)$category->active }}">
+                                <input type="hidden" name="id" id="id" value="{{ $blog->id }}">
+                                <input type="hidden" name="active" id="active" value="{{ (int)!(bool)$blog->active }}">
                                 <input type="hidden" name="notedit" value="1">
                                 <button type="submit" class="contextmenu-item">
-                                @if ($category->active == 1)
+                                @if ($blog->active == 1)
                                     {{ __('basic::elf.deactivate') }}
                                 @else
                                     {{ __('basic::elf.activate') }}
                                 @endif
                                 </button>
                             </form>
-                            <form action="{{ route('admin.blog.categories.destroy',$category->id) }}" method="POST" data-submit="check">
+                            <form action="{{ route('admin.blog.blogs.destroy',$blog->id) }}" method="POST" data-submit="check">
                                 @csrf
                                 @method('DELETE')
-                                <input type="hidden" name="id" value="{{ $category->id }}">
-                                <input type="hidden" name="name" value="{{ $category->name }}">
+                                <input type="hidden" name="id" value="{{ $blog->id }}">
+                                <input type="hidden" name="name" value="{{ $blog->name }}">
                                 <button type="submit" class="contextmenu-item">{{ __('basic::elf.delete') }}</button>
                             </form>
                         </div>
@@ -165,7 +145,7 @@
             @endforeach
             </tbody>
         </table>
-        @if (empty(count($categories)))
+        @if (empty(count($blogs)))
             <div class="no-results-box">
                 {{ __('basic::elf.nothing_was_found') }}
             </div>
