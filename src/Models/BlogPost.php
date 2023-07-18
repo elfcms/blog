@@ -5,6 +5,7 @@ namespace Elfcms\Blog\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -30,6 +31,12 @@ class BlogPost extends Model
     ];
 
     public $vote, $userVote = 0, $like, $userLike = 0;
+
+    public function getPostDateAttribute()
+    {
+        $value = $this->public_time ?? $this->created_at;
+        return Carbon::parse($value)->format('d.m.Y');
+    }
 
     public function blog()
     {

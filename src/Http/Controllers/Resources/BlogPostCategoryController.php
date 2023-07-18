@@ -1,6 +1,6 @@
 <?php
 
-namespace Elfcms\Blog\Http\Controllers;
+namespace Elfcms\Blog\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
 use Elfcms\Blog\Models\BlogPostCategory;

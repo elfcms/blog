@@ -54,4 +54,11 @@ return [
     'blog' => 'Blog',
     'blogs' => 'Blogs',
     'create_blog' => 'Einen Blog erstellen',
+    'search_category' => 'Suche nach Kategorien',
+    'search_category_name' => 'Suche nach Kategorienamen',
+    'search_category_description'=> 'Suche nach Kategoriebeschreibungen',
+    'search_post' => 'Suche nach Beiträgen',
+    'search_post_name' => 'Suche nach Beitragsnamen',
+    'search_post_description' => 'Suche nach Beitragsbeschreibungen',
+    'search_post_text' => 'Suche nach Beitragstexten',
 ];

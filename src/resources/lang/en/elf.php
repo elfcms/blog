@@ -54,5 +54,12 @@ return [
     'blog' => 'Blog',
     'blogs' => 'Blogs',
     'create_blog' => 'Create a blog',
+    'search_category' => 'Search by categories',
+    'search_category_name' => 'Search by category names',
+    'search_category_description'=> 'Search by categories descriptions',
+    'search_post' => 'Search by posts',
+    'search_post_name' => 'Search by posts names',
+    'search_post_description' => 'Search by posts descriptions',
+    'search_post_text' => 'Search by posts texts',
 
 ];

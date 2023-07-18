@@ -98,9 +98,11 @@
                     </td>
                     <td>{{ $post->slug }}</td>
                     <td>
+                    @if (!empty($post->category))
                         <a href="{{ route('admin.blog.posts',UrlParams::addArr(['category'=>$post->category->id])) }}">
                             #{{ $post->category->id }} {{ $post->category->name }}
                         </a>
+                    @endif
                     </td>
                 {{-- <td class="image-cell">
                         <img src="{{ asset($post->preview) }}" alt="">

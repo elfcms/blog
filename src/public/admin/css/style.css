@@ -446,6 +446,10 @@ textarea {
 .non-text-buttons .default-btn.search-button {
   background-position: -2px -130px;
 }
+.non-text-buttons .default-btn.submit-button.group-button {
+    background-position: -2px -162px;
+    background-image: url("../images/non-text-button-light.png");
+}
 
 .table-search-box {
   display: flex;

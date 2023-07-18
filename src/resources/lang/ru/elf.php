@@ -54,4 +54,11 @@ return [
     'blog' => 'Блог',
     'blogs' => 'Блоги',
     'create_blog' => 'Создать блог',
+    'search_category' => 'Поиск по категориям',
+    'search_category_name' => 'Поиск по названиям категорий',
+    'search_category_description'=> 'Поиск по описаниям категорий',
+    'search_post' => 'Поиск по постам',
+    'search_post_name' => 'Поиск по названиям постов',
+    'search_post_description' => 'Поиск по описаниям постов',
+    'search_post_text' => 'Поиск по тексту постов',
 ];

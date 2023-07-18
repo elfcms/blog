@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'version' => '0.5',
+    'version' => '0.5.1',
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ return [
     |
     */
 
-    'basic_package' => '1.1.0',
+    'basic_package' => '1.4.3',
 
     /*
     |--------------------------------------------------------------------------
@@ -78,5 +78,40 @@ return [
                 ],
             ]
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Search settings
+    |--------------------------------------------------------------------------
+    |
+    | Settings for search module
+    |
+    */
+
+    "search" => [
+        "tables" => [
+            [
+                "model" => "Elfcms\Blog\Models\BlogPost",
+                "name" => "blog_posts",
+                "fields" => [
+                    "name" => "blog::elf.search_post_name",
+                    "description" => "blog::elf.search_post_description",
+                    "text" => "blog::elf.search_post_text"
+                ],
+                "result" => "slug",
+                "description" => "blog::elf.search_post",
+            ],
+            [
+                "model" => "Elfcms\Blog\Models\BlogCategory",
+                "name" => "blog_categories",
+                "fields" => [
+                    "name" => "blog::elf.search_category_name",
+                    "description" => "blog::elf.search_category_description"
+                ],
+                "result" => "slug",
+                "description" => "blog::elf.search_category",
+            ],
+        ]
     ],
 ];
