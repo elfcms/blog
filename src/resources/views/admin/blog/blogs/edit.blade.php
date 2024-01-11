@@ -1,4 +1,4 @@
-@extends('blog::admin.layouts.blog')
+@extends('elfcms::admin.layouts.blog')
 
 @section('blogpage-content')
 
@@ -15,13 +15,13 @@
     </div>
     @endif
 
-    <div class="item-form">
-        <h3>{{ __('basic::elf.edit_blog') }}{{ $blog->id }}</h3>
+    <div class="post-form">
+        <h3>{{ __('elfcms::default.edit_blog') }}{{ $blog->id }}</h3>
         <div class="date-info create-info">
-            {{ __('basic::elf.created_at') }}: {{ $blog->created }}
+            {{ __('elfcms::default.created_at') }}: {{ $blog->created }}
         </div>
         <div class="date-info update-info">
-            {{ __('basic::elf.updated_at') }}: {{ $blog->updated }}
+            {{ __('elfcms::default.updated_at') }}: {{ $blog->updated }}
         </div>
         <form action="{{ route('admin.blog.blogs.update',$blog->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -41,19 +41,19 @@
                             >
                             <i></i>
                             <label for="active">
-                                {{ __('basic::elf.active') }}
+                                {{ __('elfcms::default.active') }}
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="name">{{ __('basic::elf.name') }}</label>
+                    <label for="name">{{ __('elfcms::default.name') }}</label>
                     <div class="input-wrapper">
                         <input type="text" name="name" id="name" autocomplete="off" value="{{ $blog->name }}">
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="slug">{{ __('basic::elf.slug') }}</label>
+                    <label for="slug">{{ __('elfcms::default.slug') }}</label>
                     <div class="input-wrapper">
                         <input type="text" name="slug" id="slug" autocomplete="off" value="{{ $blog->slug }}">
                     </div>
@@ -65,13 +65,13 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="desctiption">{{ __('basic::elf.description') }}</label>
+                    <label for="desctiption">{{ __('elfcms::default.description') }}</label>
                     <div class="input-wrapper">
                         <textarea name="description" id="description" cols="30" rows="10">{{ $blog->description }}</textarea>
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="preview">{{ __('basic::elf.preview') }}</label>
+                    <label for="preview">{{ __('elfcms::default.preview') }}</label>
                     <div class="input-wrapper">
                         <input type="hidden" name="preview_path" id="preview_path" value="{{$blog->preview}}">
                         <div class="image-button">
@@ -85,9 +85,9 @@
                             </div>
                             <div class="image-button-text">
                             @if (!empty($blog->image))
-                                {{ __('basic::elf.change_file') }}
+                                {{ __('elfcms::default.change_file') }}
                             @else
-                                {{ __('basic::elf.choose_file') }}
+                                {{ __('elfcms::default.choose_file') }}
                             @endif
                             </div>
                             <input type="file" name="preview" id="preview">
@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="image">{{ __('basic::elf.image') }}</label>
+                    <label for="image">{{ __('elfcms::default.image') }}</label>
                     <div class="input-wrapper">
                         <input type="hidden" name="image_path" id="image_path" value="{{$blog->image}}">
                         <div class="image-button">
@@ -109,9 +109,9 @@
                             </div>
                             <div class="image-button-text">
                             @if (!empty($blog->image))
-                                {{ __('basic::elf.change_file') }}
+                                {{ __('elfcms::default.change_file') }}
                             @else
-                                {{ __('basic::elf.choose_file') }}
+                                {{ __('elfcms::default.choose_file') }}
                             @endif
                             </div>
                             <input type="file" name="image" id="image">
@@ -119,20 +119,20 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="meta_keywords">{{ __('basic::elf.meta_keywords') }}</label>
+                    <label for="meta_keywords">{{ __('elfcms::default.meta_keywords') }}</label>
                     <div class="input-wrapper">
                         <textarea name="meta_keywords" id="meta_keywords" cols="30" rows="3">{{ $blog->meta_keywords }}</textarea>
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="meta_description">{{ __('basic::elf.meta_description') }}</label>
+                    <label for="meta_description">{{ __('elfcms::default.meta_description') }}</label>
                     <div class="input-wrapper">
                         <textarea name="meta_description" id="meta_description" cols="30" rows="3">{{ $blog->meta_description }}</textarea>
                     </div>
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('basic::elf.submit') }}</button>
+                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>

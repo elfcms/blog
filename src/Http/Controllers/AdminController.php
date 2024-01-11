@@ -24,8 +24,8 @@ class AdminController extends Controller
                 $categoriesCount = BlogCategory::count();
                 $inactiveCategoriesCount = BlogCategory::where('active','<>',1)->count();
                 $subdata[] = [
-                    'title' => __('basic::elf.categories'),
-                    'value' => $categoriesCount . ' (' . $inactiveCategoriesCount . ' ' . __('basic::elf.inactive') . ')'
+                    'title' => __('elfcms::default.categories'),
+                    'value' => $categoriesCount . ' (' . $inactiveCategoriesCount . ' ' . __('elfcms::default.inactive') . ')'
                 ];
             }
 
@@ -33,15 +33,15 @@ class AdminController extends Controller
                 $postsCount = BlogPost::count();
                 $inactivePostsCount = BlogPost::where('active','<>',1)->count();
                 $subdata[] = [
-                    'title' => __('basic::elf.posts'),
-                    'value' => $postsCount . ' (' . $inactivePostsCount . ' ' . __('basic::elf.inactive') . ')'
+                    'title' => __('elfcms::default.posts'),
+                    'value' => $postsCount . ' (' . $inactivePostsCount . ' ' . __('elfcms::default.inactive') . ')'
                 ];
             }
 
             if ($data['route'] == 'admin.blog.comments') {
                 $commentsCount = BlogComment::count();
                 $subdata[] = [
-                    'title' => __('basic::elf.comments'),
+                    'title' => __('elfcms::default.comments'),
                     'value' => $commentsCount
                 ];
             }
@@ -49,7 +49,7 @@ class AdminController extends Controller
             if ($data['route'] == 'admin.blog.likes') {
                 $likesCount = BlogLike::count();
                 $subdata[] = [
-                    'title' => __('basic::elf.likes'),
+                    'title' => __('elfcms::default.likes'),
                     'value' => $likesCount
                 ];
             }
@@ -57,7 +57,7 @@ class AdminController extends Controller
             if ($data['route'] == 'admin.blog.votes') {
                 $votesCount = BlogLike::count();
                 $subdata[] = [
-                    'title' => __('basic::elf.votes'),
+                    'title' => __('elfcms::default.votes'),
                     'value' => $votesCount
                 ];
             }
@@ -65,7 +65,7 @@ class AdminController extends Controller
             if ($data['route'] == 'admin.blog.tags') {
                 $tagsCount = BlogTag::count();
                 $subdata[] = [
-                    'title' => __('basic::elf.tags'),
+                    'title' => __('elfcms::default.tags'),
                     'value' => $tagsCount
                 ];
             }
@@ -75,7 +75,7 @@ class AdminController extends Controller
             $menuData[$key]['text'] = $text;
 
         }
-        return view('blog::admin.blog.index',[
+        return view('elfcms::admin.blog.index',[
             'page' => [
                 'title' => 'Blog',
                 'current' => url()->current(),

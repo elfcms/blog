@@ -49,7 +49,7 @@ class BlogLikeController extends Controller
 
         }
 
-        return view('blog::admin.blog.likes.index',[
+        return view('elfcms::admin.blog.likes.index',[
             'page' => [
                 'title' => 'likes',
                 'current' => url()->current(),
@@ -70,7 +70,7 @@ class BlogLikeController extends Controller
     {
         $posts = BlogPost::all();
         $likes = BlogLike::all();
-        return view('blog::admin.blog.likes.create',[
+        return view('elfcms::admin.blog.likes.create',[
             'page' => [
                 'title' => 'Create comment',
                 'current' => url()->current(),
@@ -159,7 +159,7 @@ class BlogLikeController extends Controller
     public function edit(BlogLike $like)
     {
         $posts = BlogPost::all();
-        return view('blog::admin.blog.likes.edit',[
+        return view('elfcms::admin.blog.likes.edit',[
             'page' => [
                 'title' => 'Edit like',
                 'current' => url()->current(),

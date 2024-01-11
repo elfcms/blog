@@ -1,4 +1,4 @@
-@extends('blog::admin.layouts.blog')
+@extends('elfcms::admin.layouts.blog')
 
 @section('blogpage-content')
 
@@ -15,8 +15,8 @@
     </div>
     @endif
 
-    <div class="item-form">
-        <h3>{{ __('basic::elf.create_post') }}</h3>
+    <div class="post-form">
+        <h3>{{ __('elfcms::default.create_post') }}</h3>
         <form action="{{ route('admin.blog.votes.update',$vote->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -32,37 +32,37 @@
                             >
                             <i></i>
                             <label for="active">
-                                {{ __('basic::elf.active') }}
+                                {{ __('elfcms::default.active') }}
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="post_id">{{ __('basic::elf.post') }}</label>
+                    <label for="post_id">{{ __('elfcms::default.post') }}</label>
                     <div class="input-wrapper">
                         <select name="post_id" id="post_id">
                         @foreach ($posts as $post)
-                            <option value="{{ $post->id }}" @if ($post->active != 1) class="inactive" @endif @if ($post->id == $vote->post_id) selected @endif>{{ $post->name }}@if ($post->active != 1) [{{ __('basic::elf.inactive') }}] @endif</option>
+                            <option value="{{ $post->id }}" @if ($post->active != 1) class="inactive" @endif @if ($post->id == $vote->post_id) selected @endif>{{ $post->name }}@if ($post->active != 1) [{{ __('elfcms::default.inactive') }}] @endif</option>
                         @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="user_id">{{ __('basic::elf.user') }}</label>
+                    <label for="user_id">{{ __('elfcms::default.user') }}</label>
                     <div class="input-wrapper">
                         #{{ $vote->user->id }} {{ $vote->user->email }}
                         {{--<input type="text" name="user_id" id="user_id" autocomplete="off">--}}
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="value">{{ __('basic::elf.value') }}</label>
+                    <label for="value">{{ __('elfcms::default.value') }}</label>
                     <div class="input-wrapper">
                         <input type="number" name="value" id="value" autocomplete="off" max="100" min="1" value="{{ $vote->value }}">
                     </div>
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('basic::elf.submit') }}</button>
+                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 $adminPath = Config::get('elfcms.basic.admin_path') ?? '/admin';
 
-Route::group(['middleware'=>['web','cookie','start']],function() use ($adminPath) {
+Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
 
     Route::name('admin.')->middleware('admin')->group(function() use ($adminPath) {
 
@@ -24,6 +24,17 @@ Route::group(['middleware'=>['web','cookie','start']],function() use ($adminPath
             Route::resource($adminPath . '/blog/comments', \Elfcms\Blog\Http\Controllers\Resources\BlogCommentController::class)->names(['index' => 'comments']);
             Route::resource($adminPath . '/blog/votes', \Elfcms\Blog\Http\Controllers\Resources\BlogVoteController::class)->names(['index' => 'votes']);
             Route::resource($adminPath . '/blog/likes', \Elfcms\Blog\Http\Controllers\Resources\BlogLikeController::class)->names(['index' => 'likes']);
+
+
+            Route::get($adminPath . '/blog/nav/{blog?}/{category?}', [\Elfcms\Blog\Http\Controllers\BlogNavigator::class, 'index'])->name('nav');
+            Route::resource($adminPath . '/blog/blogs', \Elfcms\Blog\Http\Controllers\Resources\BlogController::class)->names(['index' => 'blogs']);
+            Route::resource($adminPath . '/blog/posts', \Elfcms\Blog\Http\Controllers\Resources\BlogPostController::class)->names(['index' => 'posts']);
+            Route::resource($adminPath . '/blog/categories', \Elfcms\Blog\Http\Controllers\Resources\BlogCategoryController::class)->names(['index' => 'categories']);
+
+            /* Route::name('properties.')->group(function() use ($adminPath) {
+                Route::resource($adminPath . '/blog/{blog}/properties/category', \Elfcms\Blog\Http\Controllers\Resources\BlogCategoryPropertyController::class);
+                Route::resource($adminPath . '/blog/{blog}/properties/post', \Elfcms\Blog\Http\Controllers\Resources\BlogPostPropertyController::class);
+            }); */
         });
     });
 });

@@ -46,7 +46,7 @@ class BlogPostController extends Controller
         $categories = BlogCategory::all();
         $blogs = Blog::all();
 
-        return view('blog::admin.blog.posts.index',[
+        return view('elfcms::admin.blog.posts.index',[
             'page' => [
                 'title' => 'Posts',
                 'current' => url()->current(),
@@ -69,7 +69,7 @@ class BlogPostController extends Controller
     {
         $categories = BlogCategory::all();
         $blogs = Blog::all();
-        return view('blog::admin.blog.posts.create',[
+        return view('elfcms::admin.blog.posts.create',[
             'page' => [
                 'title' => 'Create post',
                 'current' => url()->current(),
@@ -193,7 +193,7 @@ class BlogPostController extends Controller
             $postCategories[] = $category->id;
         }
         $blogs = Blog::all();
-        return view('blog::admin.blog.posts.edit',[
+        return view('elfcms::admin.blog.posts.edit',[
             'page' => [
                 'title' => 'Edit post #' . $post->id,
                 'current' => url()->current(),

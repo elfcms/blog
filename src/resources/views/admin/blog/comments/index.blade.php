@@ -1,4 +1,4 @@
-@extends('blog::admin.layouts.blog')
+@extends('elfcms::admin.layouts.blog')
 
 @section('blogpage-content')
 
@@ -20,17 +20,17 @@
     <div class="widetable-wrapper">
         @if (!empty($post))
             <div class="alert alert-alternate">
-                {{ __('basic::elf.showing_results_for_post') }} <strong>#{{ $post->id }} {{ $post->name }}</strong>
+                {{ __('elfcms::default.showing_results_for_post') }} <strong>#{{ $post->id }} {{ $post->name }}</strong>
             </div>
         @endif
         @if (!empty($user))
             <div class="alert alert-alternate">
-                {{ __('basic::elf.showing_results_for_user') }} <strong>#{{ $user->id }} {{ $user->email }}</strong>
+                {{ __('elfcms::default.showing_results_for_user') }} <strong>#{{ $user->id }} {{ $user->email }}</strong>
             </div>
         @endif
         @if (!empty($parent))
             <div class="alert alert-alternate">
-                {{ __('basic::elf.showing_results_for_answer_to') }} <strong>#{{ $parent->id }} {{ Str::limit($parent->text, 25) }}</strong>
+                {{ __('elfcms::default.showing_results_for_answer_to') }} <strong>#{{ $parent->id }} {{ Str::limit($parent->text, 25) }}</strong>
             </div>
         @endif
         <table class="grid-table commenttable">
@@ -41,31 +41,31 @@
                         <a href="{{ route('admin.blog.comments',UrlParams::addArr(['order'=>'id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.post') }}
+                        {{ __('elfcms::default.post') }}
                         <a href="{{ route('admin.blog.comments',UrlParams::addArr(['order'=>'post_id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['post_id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.answer_to') }}
+                        {{ __('elfcms::default.answer_to') }}
                         <a href="{{ route('admin.blog.comments',UrlParams::addArr(['order'=>'parent_id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['parent_id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.user') }}
+                        {{ __('elfcms::default.user') }}
                         <a href="{{ route('admin.blog.comments',UrlParams::addArr(['order'=>'name','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['name'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.text') }}
+                        {{ __('elfcms::default.text') }}
                         <a href="{{ route('admin.blog.comments',UrlParams::addArr(['order'=>'text','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['text'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.created') }}
+                        {{ __('elfcms::default.created') }}
                         <a href="{{ route('admin.blog.comments',UrlParams::addArr(['order'=>'created_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['created_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.updated') }}
+                        {{ __('elfcms::default.updated') }}
                         <a href="{{ route('admin.blog.comments',UrlParams::addArr(['order'=>'updated_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['updated_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.active') }}
+                        {{ __('elfcms::default.active') }}
                         <a href="{{ route('admin.blog.comments',UrlParams::addArr(['order'=>'active','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['active'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th></th>
@@ -107,13 +107,13 @@
                     <td>{{ $comment->updated_at }}</td>
                     <td>
                     @if ($comment->active)
-                        {{ __('basic::elf.active') }}
+                        {{ __('elfcms::default.active') }}
                     @else
-                        {{ __('basic::elf.not_active') }}
+                        {{ __('elfcms::default.not_active') }}
                     @endif
                     </td>
                     <td class="button-column">
-                        <a href="{{ route('admin.blog.comments.edit',$comment->id) }}" class="default-btn edit-button">{{ __('basic::elf.edit') }}</a>
+                        <a href="{{ route('admin.blog.comments.edit',$comment->id) }}" class="default-btn edit-button">{{ __('elfcms::default.edit') }}</a>
                         <form action="{{ route('admin.blog.comments.update',$comment->id) }}" method="POST">
                             @csrf
                             @method('PUT')
@@ -122,9 +122,9 @@
                             <input type="hidden" name="notedit" value="1">
                             <button type="submit" class="default-btn activate-button">
                             @if ($comment->active == 1)
-                                {{ __('basic::elf.deactivate') }}
+                                {{ __('elfcms::default.deactivate') }}
                             @else
-                                {{ __('basic::elf.activate') }}
+                                {{ __('elfcms::default.activate') }}
                             @endif
                             </button>
                         </form>
@@ -133,7 +133,7 @@
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $comment->id }}">
                             <input type="hidden" name="name" value="{{ $comment->name }}">
-                            <button type="submit" class="default-btn delete-button">{{ __('basic::elf.delete') }}</button>
+                            <button type="submit" class="default-btn delete-button">{{ __('elfcms::default.delete') }}</button>
                         </form>
                     </td>
                 </tr>
@@ -141,7 +141,7 @@
             </tbody>
         </table>
     </div>
-    {{$comments->links('basic::admin.layouts.pagination')}}
+    {{$comments->links('elfcms::admin.layouts.pagination')}}
 
     <script>
         const checkForms = document.querySelectorAll('form[data-submit="check"]')
@@ -154,18 +154,18 @@
                         commentName = this.querySelector('[name="name"]').value,
                         self = this
                     popup({
-                        title:'{{ __('basic::elf.deleting_of_element') }}' + commentId,
-                        content:'<p>{{ __('basic::elf.are_you_sure_to_deleting_comment') }} "' + commentName + '" (ID ' + commentId + ')?</p>',
+                        title:'{{ __('elfcms::default.deleting_of_element') }}' + commentId,
+                        content:'<p>{{ __('elfcms::default.are_you_sure_to_deleting_comment') }} "' + commentName + '" (ID ' + commentId + ')?</p>',
                         buttons:[
                             {
-                                title:'{{ __('basic::elf.delete') }}',
+                                title:'{{ __('elfcms::default.delete') }}',
                                 class:'default-btn delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
-                                title:'{{ __('basic::elf.cancel') }}',
+                                title:'{{ __('elfcms::default.cancel') }}',
                                 class:'default-btn cancel-button',
                                 callback:'close'
                             }

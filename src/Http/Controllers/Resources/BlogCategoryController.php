@@ -41,7 +41,7 @@ class BlogCategoryController extends Controller
             $categories = BlogCategory::flat(trend: $trend, order: $order, count: $count, search: $search);
         }
 
-        return view('blog::admin.blog.categories.index',[
+        return view('elfcms::admin.blog.categories.index',[
             'page' => [
                 'title' => 'Blog categories',
                 'current' => url()->current(),
@@ -60,7 +60,7 @@ class BlogCategoryController extends Controller
     {
         $categories = BlogCategory::all();
         $blogs = Blog::all();
-        return view('blog::admin.blog.categories.create',[
+        return view('elfcms::admin.blog.categories.create',[
             'page' => [
                 'title' => 'Create category',
                 'current' => url()->current(),
@@ -171,7 +171,7 @@ class BlogCategoryController extends Controller
         $exclude =BlogCategory::childrenid($category->id,true);
         $categories = BlogCategory::whereNotIn('id',$exclude)->get();
         $blogs = Blog::all();
-        return view('blog::admin.blog.categories.edit',[
+        return view('elfcms::admin.blog.categories.edit',[
             'page' => [
                 'title' => 'Edit category #' . $category->id,
                 'current' => url()->current(),

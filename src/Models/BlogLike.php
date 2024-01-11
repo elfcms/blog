@@ -29,33 +29,33 @@ class BlogLike extends Model
 
         parent::boot();
 
-        static::creating(function($item) {
+        static::creating(function($post) {
 
-            //Log::info('Creating event call: '.$item);
-
-        });
-
-        static::created(function($item) {
-
-            //Log::info('Created event call: '.$item);
+            //Log::info('Creating event call: '.$post);
 
         });
 
-        static::updating(function($item) {
+        static::created(function($post) {
 
-            //Log::info('Updating event call: '.$item);
-
-        });
-
-        static::updated(function($item) {
-
-            //Log::info('Updated event call: '.$item);
+            //Log::info('Created event call: '.$post);
 
         });
 
-        static::deleted(function($item) {
+        static::updating(function($post) {
 
-            //Log::info('Deleted event call: '.$item);
+            //Log::info('Updating event call: '.$post);
+
+        });
+
+        static::updated(function($post) {
+
+            //Log::info('Updated event call: '.$post);
+
+        });
+
+        static::deleted(function($post) {
+
+            //Log::info('Deleted event call: '.$post);
 
         });
     }

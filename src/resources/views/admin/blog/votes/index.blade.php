@@ -1,4 +1,4 @@
-@extends('blog::admin.layouts.blog')
+@extends('elfcms::admin.layouts.blog')
 
 @section('blogpage-content')
 
@@ -20,12 +20,12 @@
     <div class="widetable-wrapper">
         @if (!empty($post))
             <div class="alert alert-alternate">
-                {{ __('basic::elf.showing_results_for_post') }} <strong>#{{ $post->id }} {{ $post->name }}</strong>
+                {{ __('elfcms::default.showing_results_for_post') }} <strong>#{{ $post->id }} {{ $post->name }}</strong>
             </div>
         @endif
         @if (!empty($user))
             <div class="alert alert-alternate">
-                {{ __('basic::elf.showing_results_for_user') }} <strong>#{{ $user->id }} {{ $user->email }}</strong>
+                {{ __('elfcms::default.showing_results_for_user') }} <strong>#{{ $user->id }} {{ $user->email }}</strong>
             </div>
         @endif
         <table class="grid-table votetable">
@@ -36,23 +36,23 @@
                         <a href="{{ route('admin.blog.votes',UrlParams::addArr(['order'=>'id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.post') }}
+                        {{ __('elfcms::default.post') }}
                         <a href="{{ route('admin.blog.votes',UrlParams::addArr(['order'=>'post_id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['post_id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.user') }}
+                        {{ __('elfcms::default.user') }}
                         <a href="{{ route('admin.blog.votes',UrlParams::addArr(['order'=>'name','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['name'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.value') }}
+                        {{ __('elfcms::default.value') }}
                         <a href="{{ route('admin.blog.votes',UrlParams::addArr(['order'=>'value','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['value'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.created') }}
+                        {{ __('elfcms::default.created') }}
                         <a href="{{ route('admin.blog.votes',UrlParams::addArr(['order'=>'created_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['created_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
-                        {{ __('basic::elf.updated') }}
+                        {{ __('elfcms::default.updated') }}
                         <a href="{{ route('admin.blog.votes',UrlParams::addArr(['order'=>'updated_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['updated_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th></th>
@@ -85,13 +85,13 @@
                     <td>{{ $vote->created_at }}</td>
                     <td>{{ $vote->updated_at }}</td>
                     <td class="button-column">
-                        <a href="{{ route('admin.blog.votes.edit',$vote->id) }}" class="default-btn edit-button">{{ __('basic::elf.edit') }}</a>
+                        <a href="{{ route('admin.blog.votes.edit',$vote->id) }}" class="default-btn edit-button">{{ __('elfcms::default.edit') }}</a>
                         <form action="{{ route('admin.blog.votes.destroy',$vote->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $vote->id }}">
                             <input type="hidden" name="name" value="{{ $vote->name }}">
-                            <button type="submit" class="default-btn delete-button">{{ __('basic::elf.delete') }}</button>
+                            <button type="submit" class="default-btn delete-button">{{ __('elfcms::default.delete') }}</button>
                         </form>
                     </td>
                 </tr>
@@ -99,7 +99,7 @@
             </tbody>
         </table>
     </div>
-    {{$votes->links('basic::admin.layouts.pagination')}}
+    {{$votes->links('elfcms::admin.layouts.pagination')}}
 
     <script>
         const checkForms = document.querySelectorAll('form[data-submit="check"]')
@@ -112,18 +112,18 @@
                         voteName = this.querySelector('[name="name"]').value,
                         self = this
                     popup({
-                        title:'{{ __('basic::elf.deleting_of_element') }}' + voteId,
-                        content:'<p>{{ __('basic::elf.are_you_sure_to_deleting_vote') }} "' + voteName + '" (ID ' + voteId + ')?</p>',
+                        title:'{{ __('elfcms::default.deleting_of_element') }}' + voteId,
+                        content:'<p>{{ __('elfcms::default.are_you_sure_to_deleting_vote') }} "' + voteName + '" (ID ' + voteId + ')?</p>',
                         buttons:[
                             {
-                                title:'{{ __('basic::elf.delete') }}',
+                                title:'{{ __('elfcms::default.delete') }}',
                                 class:'default-btn delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
-                                title:'{{ __('basic::elf.cancel') }}',
+                                title:'{{ __('elfcms::default.cancel') }}',
                                 class:'default-btn cancel-button',
                                 callback:'close'
                             }

@@ -130,75 +130,75 @@ class BlogPost extends Model
 
         parent::boot();
 
-        static::retrieved(function($item) {
+        static::retrieved(function($post) {
 
-            Log::info('retrieved event call: '.$item->category);
-
-        });
-
-        static::creating(function($item) {
-
-            //Log::info('Creating event call: '.$item);
+            Log::info('retrieved event call: '.$post->category);
 
         });
 
-        static::created(function($item) {
+        static::creating(function($post) {
 
-            //Log::info('Created event call: '.$item);
-
-        });
-
-        static::updating(function($item) {
-
-            Log::info('Updating event call: '.$item);
+            //Log::info('Creating event call: '.$post);
 
         });
 
-        static::updated(function($item) {
+        static::created(function($post) {
 
-            Log::info('Updated event call: '.$item);
-
-        });
-
-        static::saving(function($item) {
-
-            Log::info('saving event call: '.$item);
+            //Log::info('Created event call: '.$post);
 
         });
 
-        static::saved(function($item) {
+        static::updating(function($post) {
 
-            Log::info('saved event call: '.$item);
-
-        });
-
-        static::deleting(function($item) {
-
-            Log::info('deleting event call: '.$item);
+            Log::info('Updating event call: '.$post);
 
         });
 
-        static::deleted(function($item) {
+        static::updated(function($post) {
 
-            Log::info('Deleted event call: '.$item);
-
-        });
-
-        static::restoring(function($item) {
-
-            Log::info('restoring event call: '.$item);
+            Log::info('Updated event call: '.$post);
 
         });
 
-        static::restored(function($item) {
+        static::saving(function($post) {
 
-            Log::info('restored event call: '.$item);
+            Log::info('saving event call: '.$post);
 
         });
 
-        static::replicating(function($item) {
+        static::saved(function($post) {
 
-            //Log::info('replicating event call: '.$item);
+            Log::info('saved event call: '.$post);
+
+        });
+
+        static::deleting(function($post) {
+
+            Log::info('deleting event call: '.$post);
+
+        });
+
+        static::deleted(function($post) {
+
+            Log::info('Deleted event call: '.$post);
+
+        });
+
+        static::restoring(function($post) {
+
+            Log::info('restoring event call: '.$post);
+
+        });
+
+        static::restored(function($post) {
+
+            Log::info('restored event call: '.$post);
+
+        });
+
+        static::replicating(function($post) {
+
+            //Log::info('replicating event call: '.$post);
 
         });
 

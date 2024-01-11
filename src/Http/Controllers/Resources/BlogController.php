@@ -39,7 +39,7 @@ class BlogController extends Controller
             $blogs = Blog::orderBy($order, $trend)->paginate($count);
         }
 
-        return view('blog::admin.blog.blogs.index',[
+        return view('elfcms::admin.blog.blogs.index',[
             'page' => [
                 'title' => 'Blogs',
                 'current' => url()->current(),
@@ -54,9 +54,9 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blog::admin.blog.blogs.create',[
+        return view('elfcms::admin.blog.blogs.create',[
             'page' => [
-                'title' => __('blog::elf.create_blog'),
+                'title' => __('blog::default.create_blog'),
                 'current' => url()->current(),
             ],
         ]);
@@ -121,7 +121,7 @@ class BlogController extends Controller
         if (!empty($blog->updated_at)) {
             $blog->updated = date('d.m.Y H:i:s',strtotime($blog->updated_at));
         }
-        return view('blog::admin.blog.blogs.edit',[
+        return view('elfcms::admin.blog.blogs.edit',[
             'page' => [
                 'title' => 'Edit blog #' . $blog->id,
                 'current' => url()->current(),

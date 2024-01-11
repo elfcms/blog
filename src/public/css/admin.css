@@ -1,7 +1,7 @@
 .popup-wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-posts: center;
   -webkit-backdrop-filter: blur(2px);
           backdrop-filter: blur(2px);
   background-color: rgba(14, 25, 50, 0.3);
@@ -50,7 +50,7 @@
   border-top: 1px solid #dbe4ea;
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
+  align-posts: center;
 }
 .popup-wrapper .popup-content {
   padding: 10px 15px;
@@ -414,7 +414,7 @@ textarea {
 
 .non-text-buttons {
   display: flex;
-  align-items: center;
+  align-posts: center;
 }
 .non-text-buttons .default-btn {
   width: 30px;
@@ -453,7 +453,7 @@ textarea {
 }
 .table-search-box .table-search-result-title {
   display: flex;
-  align-items: center;
+  align-posts: center;
   font-size: 1.3em;
   font-weight: 300;
   color: #043575;
@@ -467,7 +467,7 @@ textarea {
 .table-search-box form .input-box label {
   min-width: initial;
   display: flex;
-  align-items: center;
+  align-posts: center;
   color: #435c6f;
 }
 
@@ -512,7 +512,7 @@ textarea {
 .context-popup .context-popup-content .contextmenu-content-box form {
   display: contents;
 }
-.context-popup .context-popup-content .contextmenu-content-box .contextmenu-item {
+.context-popup .context-popup-content .contextmenu-content-box .contextmenu-post {
   display: block;
   padding: 6px 14px;
   background-color: transparent;
@@ -529,7 +529,7 @@ textarea {
                   }
    */
 }
-.context-popup .context-popup-content .contextmenu-content-box .contextmenu-item:hover {
+.context-popup .context-popup-content .contextmenu-content-box .contextmenu-post:hover {
   background-color: #deeef9;
 }
 
@@ -582,7 +582,7 @@ textarea {
   text-align: center;
 }
 
-.item-form {
+.post-form {
   /* margin: 0 -10px; */
   /* padding: 15px 10px; */
   background-color: #fff;
@@ -593,7 +593,7 @@ textarea {
   min-width: 30%;
   overflow: hidden;
 }
-.item-form h3 {
+.post-form h3 {
   margin: 0;
   padding: 15px 15px;
   background-color: #074ca5;
@@ -601,14 +601,14 @@ textarea {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
 }
-.item-form h4 {
+.post-form h4 {
   margin: 0;
   padding: 10px 10px;
 }
-.item-form form {
+.post-form form {
   padding-top: 10px;
 }
-.item-form .roles-list {
+.post-form .roles-list {
   padding: 0px 0px 15px;
 }
 
@@ -618,7 +618,7 @@ textarea {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
+  align-posts: center;
 }
 .button-box.single-box {
   justify-content: start;
@@ -741,32 +741,32 @@ textarea {
   overflow-y: auto;
   box-shadow: 0px 2px 4px 0px rgba(67, 92, 111, 0.5);
 }
-.tag-form-wrapper .tag-input-box .tag-prompt-list .tag-prompt-item {
+.tag-form-wrapper .tag-input-box .tag-prompt-list .tag-prompt-post {
   padding: 2px 5px;
   cursor: pointer;
 }
-.tag-form-wrapper .tag-input-box .tag-prompt-list .tag-prompt-item:nth-child(odd) {
+.tag-form-wrapper .tag-input-box .tag-prompt-list .tag-prompt-post:nth-child(odd) {
   background-color: #f4f8fb;
 }
-.tag-form-wrapper .tag-input-box .tag-prompt-list .tag-prompt-item:hover {
+.tag-form-wrapper .tag-input-box .tag-prompt-list .tag-prompt-post:hover {
   color: #043575;
 }
 .tag-form-wrapper .tag-list-box {
   display: flex;
   flex-wrap: wrap;
 }
-.tag-form-wrapper .tag-list-box .tag-item-box {
+.tag-form-wrapper .tag-list-box .tag-post-box {
   padding: 2px 5px;
   margin: 1px;
   border: 1px solid #849aab;
   border-radius: 3px;
   cursor: default;
 }
-.tag-form-wrapper .tag-list-box .tag-item-box .tag-item-remove {
+.tag-form-wrapper .tag-list-box .tag-post-box .tag-post-remove {
   color: #435c6f;
   cursor: pointer;
 }
-.tag-form-wrapper .tag-list-box .tag-item-box:hover .tag-item-remove {
+.tag-form-wrapper .tag-list-box .tag-post-box:hover .tag-post-remove {
   color: #941b05;
 }
 
@@ -900,7 +900,7 @@ main {
 #toppanel {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-posts: flex-start;
   margin-bottom: 20px;
   height: 40px;
   z-index: 10;
@@ -1122,7 +1122,7 @@ button.option-table-add {
   text-overflow: ellipsis;
   white-space: nowrap;
   display: flex;
-  align-items: center;
+  align-posts: center;
 }
 .grid-table th {
   position: -webkit-sticky;
@@ -1223,7 +1223,7 @@ button.option-table-add {
 .grid-table.menutable {
   grid-template-columns: 70px minmax(150px, 1.5fr) minmax(150px, 1.5fr) minmax(100px, 1fr) minmax(100px, 1fr) 270px;
 }
-.grid-table.menuitemtable {
+.grid-table.menuposttable {
   grid-template-columns: 70px minmax(150px, 1.5fr) minmax(150px, 1.5fr) minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr) 270px;
 }
 .grid-table.eeventtable {

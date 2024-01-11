@@ -37,8 +37,8 @@ class BlogCategory extends Model
         $result = [];
         $result = self::where('parent_id',$parent)->get();
         if (!empty($result)) {
-            foreach ($result as $i => $item) {
-                $sublevelData = self::tree($item->id);
+            foreach ($result as $i => $post) {
+                $sublevelData = self::tree($post->id);
                 if (!empty($sublevelData)) {
                     $result[$i]['children'] = $sublevelData;
                 }
@@ -80,10 +80,10 @@ class BlogCategory extends Model
         }
 
         if (!empty($data)) {
-            foreach ($data as $item) {
-                $item['level'] = $level;
-                $result[] = $item;
-                $sublevelData = self::flat(parent: $item->id, level: $level+1);
+            foreach ($data as $post) {
+                $post['level'] = $level;
+                $result[] = $post;
+                $sublevelData = self::flat(parent: $post->id, level: $level+1);
                 if (!empty($sublevelData)) {
                     $result = array_merge($result, $sublevelData);
                 }
@@ -98,10 +98,10 @@ class BlogCategory extends Model
         $result = [];
         $data = self::where('parent_id',$id)->get();
 
-        foreach ($data as $item) {
-            $result[] = $item;
+        foreach ($data as $post) {
+            $result[] = $post;
             if ($subchild) {
-                $subresult = self::children($item->id,$subchild);
+                $subresult = self::children($post->id,$subchild);
                 if (!empty($subresult)) {
                     $result = array_merge($result, $subresult);
                 }
@@ -117,10 +117,10 @@ class BlogCategory extends Model
         $result = [];
         $data = self::where('parent_id',$id)->get('id');
 
-        foreach ($data as $item) {
-            $result[] = $item->id;
+        foreach ($data as $post) {
+            $result[] = $post->id;
             if ($subchild) {
-                $subresult = self::childrenid($item->id,$subchild);
+                $subresult = self::childrenid($post->id,$subchild);
                 if (!empty($subresult)) {
                     $result = array_merge($result, $subresult);
                 }
@@ -151,33 +151,33 @@ class BlogCategory extends Model
 
         parent::boot();
 
-        static::creating(function($item) {
+        static::creating(function($post) {
 
-            //Log::info('Creating event call: '.$item);
-
-        });
-
-        static::created(function($item) {
-
-            //Log::info('Created event call: '.$item);
+            //Log::info('Creating event call: '.$post);
 
         });
 
-        static::updating(function($item) {
+        static::created(function($post) {
 
-            //Log::info('Updating event call: '.$item);
-
-        });
-
-        static::updated(function($item) {
-
-            //Log::info('Updated event call: '.$item);
+            //Log::info('Created event call: '.$post);
 
         });
 
-        static::deleted(function($item) {
+        static::updating(function($post) {
 
-            //Log::info('Deleted event call: '.$item);
+            //Log::info('Updating event call: '.$post);
+
+        });
+
+        static::updated(function($post) {
+
+            //Log::info('Updated event call: '.$post);
+
+        });
+
+        static::deleted(function($post) {
+
+            //Log::info('Deleted event call: '.$post);
 
         });
     }
