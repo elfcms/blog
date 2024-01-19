@@ -20,39 +20,39 @@ class BlogTag extends Model
     }
 
 
-    public static function boot() {
+    public static function boot()
+    {
 
         parent::boot();
 
-        static::creating(function($post) {
+        static::creating(function ($post) {
 
             //Log::info('Creating event call: '.$post);
 
         });
 
-        static::created(function($post) {
+        static::created(function ($post) {
 
             //Log::info('Created event call: '.$post);
 
         });
 
-        static::updating(function($post) {
+        static::updating(function ($post) {
 
             //Log::info('Updating event call: '.$post);
 
         });
 
-        static::updated(function($post) {
+        static::updated(function ($post) {
 
             //Log::info('Updated event call: '.$post);
 
         });
 
-        static::deleted(function($post) {
+        static::deleted(function ($post) {
 
             //Log::info('Deleted event call: '.$post);
 
         });
     }
-
 }

@@ -33,7 +33,7 @@
                 {{ __('elfcms::default.showing_results_for_answer_to') }} <strong>#{{ $parent->id }} {{ Str::limit($parent->text, 25) }}</strong>
             </div>
         @endif
-        <table class="grid-table commenttable">
+        <table class="grid-table table-cols-9" style="--first-col:65px; --last-col:140px; --minw:800px">
             <thead>
                 <tr>
                     <th>
@@ -112,20 +112,22 @@
                         {{ __('elfcms::default.not_active') }}
                     @endif
                     </td>
-                    <td class="button-column">
-                        <a href="{{ route('admin.blog.comments.edit',$comment->id) }}" class="default-btn edit-button">{{ __('elfcms::default.edit') }}</a>
+                    <td class="button-column non-text-buttons">
+                        <a href="{{ route('admin.blog.comments.edit',$comment->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.blog.comments.update',$comment->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="id" id="id" value="{{ $comment->id }}">
                             <input type="hidden" name="active" id="active" value="{{ (int)!(bool)$comment->active }}">
                             <input type="hidden" name="notedit" value="1">
-                            <button type="submit" class="default-btn activate-button">
+                            <button type="submit" @class(['default-btn', 'activate-button' => $comment->active == 1, 'deactivate-button' => $comment->active == 0])
+                            title="
                             @if ($comment->active == 1)
                                 {{ __('elfcms::default.deactivate') }}
                             @else
                                 {{ __('elfcms::default.activate') }}
                             @endif
+                            ">
                             </button>
                         </form>
                         <form action="{{ route('admin.blog.comments.destroy',$comment->id) }}" method="POST" data-submit="check">
@@ -133,7 +135,7 @@
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $comment->id }}">
                             <input type="hidden" name="name" value="{{ $comment->name }}">
-                            <button type="submit" class="default-btn delete-button">{{ __('elfcms::default.delete') }}</button>
+                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                     </td>
                 </tr>

@@ -33,15 +33,14 @@ class BlogCategoryController extends Controller
             $count = 30;
         }
         $search = $request->search ?? '';
-        //$categories = BlogCategory::where('parent_id',null)->get();
+
         if (!empty($search)) {
-            $categories = BlogCategory::where('name','like',"%{$search}%")->orderBy($order, $trend)->paginate($count);
-        }
-        else {
+            $categories = BlogCategory::where('name', 'like', "%{$search}%")->orderBy($order, $trend)->paginate($count);
+        } else {
             $categories = BlogCategory::flat(trend: $trend, order: $order, count: $count, search: $search);
         }
 
-        return view('elfcms::admin.blog.categories.index',[
+        return view('elfcms::admin.blog.categories.index', [
             'page' => [
                 'title' => 'Blog categories',
                 'current' => url()->current(),
@@ -54,19 +53,36 @@ class BlogCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request  $request)
     {
+        $category_id = null;
         $categories = BlogCategory::all();
-        $blogs = Blog::all();
-        return view('elfcms::admin.blog.categories.create',[
+        $blogs = Blog::active()->get();
+        $currentBlog = Blog::where('id', $request->blog)->orWhere('slug', $request->blog)->first();
+        $firstBlog = Blog::active()->first();
+        if (!empty($request->category_id)) {
+            $curentCategory = BlogCategory::find($request->category_id);
+            if ($curentCategory) {
+                $category_id = $request->category_id;
+                if (empty($request->blog)) {
+                    $currentBlog = $curentCategory->blog;
+                }
+            }
+        }
+
+        return view('elfcms::admin.blog.categories.create', [
             'page' => [
                 'title' => 'Create category',
                 'current' => url()->current(),
             ],
             'categories' => $categories,
             'blogs' => $blogs,
+            'currentBlog' => $currentBlog,
+            'firstBlog' => $firstBlog,
+            'category_id' => $category_id,
         ]);
     }
 
@@ -84,37 +100,35 @@ class BlogCategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'slug' => 'required|unique:Elfcms\Blog\Models\BlogCategory,slug',
-            'image' => 'nullable|file|max:512',
-            'preview' => 'nullable|file|max:256'
+            'image' => 'nullable|file|max:' . config('elfcms.blog.files.max_size.image') ?? 1024,
+            'preview' => 'nullable|file|max:' . config('elfcms.blog.files.max_size.preview') ?? 768
         ]);
 
         $image_path = '';
         $preview_path = '';
         if (!empty($request->file()['image'])) {
-            $image = $request->file()['image']->store('public/blog/categories/image');
-            $image_path = str_ireplace('public/','/storage/',$image);
+            $image = $request->file()['image']->store('public/elfcms/blog/categories/image');
+            $image_path = str_ireplace('public/', '/storage/', $image);
         }
         if (!empty($request->file()['preview'])) {
-            $preview = $request->file()['preview']->store('public/blog/categories/preview');
-            $preview_path = str_ireplace('public/','/storage/',$preview);
+            $preview = $request->file()['preview']->store('public/elfcms/blog/categories/preview');
+            $preview_path = str_ireplace('public/', '/storage/', $preview);
         }
 
         $public_time = $request->public_time[0];
 
         if (empty($request->public_time[1]) && !empty($public_time)) {
             $public_time .= ' 00:00:00';
-        }
-        elseif (!empty($public_time)) {
-            $public_time .= ' '.$request->public_time[1];
+        } elseif (!empty($public_time)) {
+            $public_time .= ' ' . $request->public_time[1];
         }
 
         $end_time = $request->end_time[0];
 
         if (empty($request->end_time[1]) && !empty($end_time)) {
             $end_time .= ' 00:00:00';
-        }
-        elseif (!empty($end_time)) {
-            $end_time .= ' '.$request->end_time[1];
+        } elseif (!empty($end_time)) {
+            $end_time .= ' ' . $request->end_time[1];
         }
 
         $validated['blog_id'] = $request->blog_id ?? null;
@@ -130,7 +144,7 @@ class BlogCategoryController extends Controller
 
         $category = BlogCategory::create($validated);
 
-        return redirect(route('admin.blog.categories.edit',$category->id))->with('categorycreated','Category created successfully');
+        return redirect(route('admin.blog.categories.edit', $category))->with('categorycreated', 'Category created successfully');
     }
 
     /**
@@ -148,30 +162,31 @@ class BlogCategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit(BlogCategory $category)
+    public function edit(BlogCategory $category, Request  $request)
     {
         if (!empty($category->end_time)) {
-            $category->end_time_time = date('H:i',strtotime($category->end_time));
-            $category->end_time = date('Y-m-d',strtotime($category->end_time));
+            $category->end_time_time = date('H:i', strtotime($category->end_time));
+            $category->end_time = date('Y-m-d', strtotime($category->end_time));
         }
         if (!empty($category->public_time)) {
-            $category->public_time_time = date('H:i',strtotime($category->public_time));
-            $category->public_time = date('Y-m-d',strtotime($category->public_time));
+            $category->public_time_time = date('H:i', strtotime($category->public_time));
+            $category->public_time = date('Y-m-d', strtotime($category->public_time));
         }
         $category->created = '';
         $category->updated = '';
         if (!empty($category->created_at)) {
-            $category->created = date('d.m.Y H:i:s',strtotime($category->created_at));
+            $category->created = date('d.m.Y H:i:s', strtotime($category->created_at));
         }
         if (!empty($category->updated_at)) {
-            $category->updated = date('d.m.Y H:i:s',strtotime($category->updated_at));
+            $category->updated = date('d.m.Y H:i:s', strtotime($category->updated_at));
         }
-        $exclude =BlogCategory::childrenid($category->id,true);
-        $categories = BlogCategory::whereNotIn('id',$exclude)->get();
+        $exclude = BlogCategory::childrenid($category->id, true);
+        $categories = BlogCategory::whereNotIn('id', $exclude)->get();
         $blogs = Blog::all();
-        return view('elfcms::admin.blog.categories.edit',[
+        return view('elfcms::admin.blog.categories.edit', [
             'page' => [
                 'title' => 'Edit category #' . $category->id,
                 'current' => url()->current(),
@@ -196,20 +211,18 @@ class BlogCategoryController extends Controller
 
             $category->save();
 
-            return redirect(route('admin.blog.categories'))->with('categoryedited','Category edited successfully');
-        }
-        else {
+            return redirect(route('admin.blog.categories'))->with('categoryedited', 'Category edited successfully');
+        } else {
             $request->merge([
                 'slug' => Str::slug($request->slug),
             ]);
             $validated = $request->validate([
                 'name' => 'required',
-                //'slug' => 'required|unique:Elfcms\Blog\Models\BlogCategory,slug',
                 'slug' => 'required',
-                'image' => 'nullable|file|max:512',
-                'preview' => 'nullable|file|max:256'
+                'image' => 'nullable|file|max:' . config('elfcms.blog.files.max_size.image') ?? 1024,
+                'preview' => 'nullable|file|max:' . config('elfcms.blog.files.max_size.preview') ?? 768
             ]);
-            if (BlogCategory::where('slug',$request->slug)->where('id','<>',$category->id)->first()) {
+            if (BlogCategory::where('slug', $request->slug)->where('id', '<>', $category->id)->first()) {
                 return redirect(route('admin.blog.categories.edit'))->withErrors([
                     'slug' => 'Category already exists'
                 ]);
@@ -218,29 +231,27 @@ class BlogCategoryController extends Controller
             $preview_path = $request->preview_path;
             if (!empty($request->file()['image'])) {
                 $image = $request->file()['image']->store('public/blog/categories/image');
-                $image_path = str_ireplace('public/','/storage/',$image);
+                $image_path = str_ireplace('public/', '/storage/', $image);
             }
             if (!empty($request->file()['preview'])) {
                 $preview = $request->file()['preview']->store('public/blog/categories/preview');
-                $preview_path = str_ireplace('public/','/storage/',$preview);
+                $preview_path = str_ireplace('public/', '/storage/', $preview);
             }
 
             $public_time = $request->public_time[0];
 
             if (empty($request->public_time[1]) && !empty($public_time)) {
                 $public_time .= ' 00:00:00';
-            }
-            elseif (!empty($public_time)) {
-                $public_time .= ' '.$request->public_time[1];
+            } elseif (!empty($public_time)) {
+                $public_time .= ' ' . $request->public_time[1];
             }
 
             $end_time = $request->end_time[0];
 
             if (empty($request->end_time[1]) && !empty($end_time)) {
                 $end_time .= ' 00:00:00';
-            }
-            elseif (!empty($end_time)) {
-                $end_time .= ' '.$request->end_time[1];
+            } elseif (!empty($end_time)) {
+                $end_time .= ' ' . $request->end_time[1];
             }
 
             $category->name = $validated['name'];
@@ -258,7 +269,7 @@ class BlogCategoryController extends Controller
 
             $category->save();
 
-            return redirect(route('admin.blog.categories.edit',$category->id))->with('categoryedited','Category edited successfully');
+            return redirect(route('admin.blog.categories.edit', $category))->with('categoryedited', 'Category edited successfully');
         }
     }
 
@@ -271,9 +282,9 @@ class BlogCategoryController extends Controller
     public function destroy(BlogCategory $category)
     {
         if (!$category->delete()) {
-            return redirect(route('admin.blog.categories'))->withErrors(['categorydelerror'=>'Error of category deleting']);
+            return redirect(route('admin.blog.categories'))->withErrors(['categorydelerror' => 'Error of category deleting']);
         }
 
-        return redirect(route('admin.blog.categories'))->with('categorydeleted','Category deleted successfully');
+        return redirect(route('admin.blog.categories'))->with('categorydeleted', 'Category deleted successfully');
     }
 }

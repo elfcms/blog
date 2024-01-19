@@ -32,6 +32,26 @@ class BlogPost extends Model
 
     public $vote, $userVote = 0, $like, $userLike = 0;
 
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
+    public function scopePosition($query)
+    {
+        return $query->orderBy('position');
+    }
+
     public function getPostDateAttribute()
     {
         $value = $this->public_time ?? $this->created_at;
@@ -43,10 +63,10 @@ class BlogPost extends Model
         return $this->belongsTo(Blog::class, 'blog_id');
     }
 
-    /* public function category()
+    public function category()
     {
         return $this->belongsTo(BlogCategory::class, 'category_id');
-    } */
+    }
 
     public function categories()
     {
@@ -75,18 +95,18 @@ class BlogPost extends Model
 
     public function getLike()
     {
-        $this->likeResult = $this->likes()->where('value','>','0')->count();
-        $this->dislikeResult = $this->likes()->where('value','<','0')->count();
+        $this->likeResult = $this->likes()->where('value', '>', '0')->count();
+        $this->dislikeResult = $this->likes()->where('value', '<', '0')->count();
 
         if (Auth::check()) {
             $user = Auth::user();
-            $userLike =$this->likes()->where('user_id',$user->id)->first();
+            $userLike = $this->likes()->where('user_id', $user->id)->first();
             if (!empty($userLike)) {
                 $this->userLike = $userLike->value;
             }
         }
 
-        return $this->like = ['likes' => $this->likeResult, 'dislikes' => $this->dislikeResult, 'user_value'=> $this->userLike];
+        return $this->like = ['likes' => $this->likeResult, 'dislikes' => $this->dislikeResult, 'user_value' => $this->userLike];
     }
 
     public function getVote()
@@ -103,13 +123,13 @@ class BlogPost extends Model
         }
         if (Auth::check()) {
             $user = Auth::user();
-            $vote = $this->votes()->where('user_id',$user->id)->first();
+            $vote = $this->votes()->where('user_id', $user->id)->first();
             if (!empty($vote)) {
                 $this->userVote = $vote->value;
             }
         }
 
-        return $this->vote = ['value'=>$result,'count'=>$count,'text'=>number_format($result,1,','),'user_value'=>$this->userVote];
+        return $this->vote = ['value' => $result, 'count' => $count, 'text' => number_format($result, 1, ','), 'user_value' => $this->userVote];
     }
 
     /* public function getUserVote()
@@ -126,82 +146,72 @@ class BlogPost extends Model
     } */
 
 
-    public static function boot() {
+    public static function boot()
+    {
 
         parent::boot();
 
-        static::retrieved(function($post) {
+        static::retrieved(function ($post) {
 
-            Log::info('retrieved event call: '.$post->category);
-
+            Log::info('retrieved event call: ' . $post->category);
         });
 
-        static::creating(function($post) {
+        static::creating(function ($post) {
 
             //Log::info('Creating event call: '.$post);
 
         });
 
-        static::created(function($post) {
+        static::created(function ($post) {
 
             //Log::info('Created event call: '.$post);
 
         });
 
-        static::updating(function($post) {
+        static::updating(function ($post) {
 
-            Log::info('Updating event call: '.$post);
-
+            Log::info('Updating event call: ' . $post);
         });
 
-        static::updated(function($post) {
+        static::updated(function ($post) {
 
-            Log::info('Updated event call: '.$post);
-
+            Log::info('Updated event call: ' . $post);
         });
 
-        static::saving(function($post) {
+        static::saving(function ($post) {
 
-            Log::info('saving event call: '.$post);
-
+            Log::info('saving event call: ' . $post);
         });
 
-        static::saved(function($post) {
+        static::saved(function ($post) {
 
-            Log::info('saved event call: '.$post);
-
+            Log::info('saved event call: ' . $post);
         });
 
-        static::deleting(function($post) {
+        static::deleting(function ($post) {
 
-            Log::info('deleting event call: '.$post);
-
+            Log::info('deleting event call: ' . $post);
         });
 
-        static::deleted(function($post) {
+        static::deleted(function ($post) {
 
-            Log::info('Deleted event call: '.$post);
-
+            Log::info('Deleted event call: ' . $post);
         });
 
-        static::restoring(function($post) {
+        static::restoring(function ($post) {
 
-            Log::info('restoring event call: '.$post);
-
+            Log::info('restoring event call: ' . $post);
         });
 
-        static::restored(function($post) {
+        static::restored(function ($post) {
 
-            Log::info('restored event call: '.$post);
-
+            Log::info('restored event call: ' . $post);
         });
 
-        static::replicating(function($post) {
+        static::replicating(function ($post) {
 
             //Log::info('replicating event call: '.$post);
 
         });
-
     }
-
 }

@@ -23,28 +23,13 @@
         <div class="date-info update-info">
             {{ __('elfcms::default.updated_at') }}: {{ $blog->updated }}
         </div>
-        <form action="{{ route('admin.blog.blogs.update',$blog->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.blog.blogs.update',$blog) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="colored-rows-box">
                 <input type="hidden" name="id" id="id" value="{{ $blog->id }}">
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="active"
-                                id="active"
-                                @if ($blog->active == 1)
-                                checked
-                                @endif
-                            >
-                            <i></i>
-                            <label for="active">
-                                {{ __('elfcms::default.active') }}
-                            </label>
-                        </div>
-                    </div>
+                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" style="blue" :checked="$blog->active" />
                 </div>
                 <div class="input-box colored">
                     <label for="name">{{ __('elfcms::default.name') }}</label>
@@ -70,54 +55,18 @@
                         <textarea name="description" id="description" cols="30" rows="10">{{ $blog->description }}</textarea>
                     </div>
                 </div>
-                <div class="input-box colored">
+                {{-- <div class="input-box colored">
                     <label for="preview">{{ __('elfcms::default.preview') }}</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="preview_path" id="preview_path" value="{{$blog->preview}}">
-                        <div class="image-button">
-                            <div class="delete-image @if (empty($blog->preview)) hidden @endif">&#215;</div>
-                            <div class="image-button-img">
-                            @if (!empty($blog->image))
-                                <img src="{{ asset($blog->preview) }}" alt="Preview">
-                            @else
-                                <img src="{{ asset('/vendor/elfcms/blog/admin/images/icons/upload.png') }}" alt="Upload file">
-                            @endif
-                            </div>
-                            <div class="image-button-text">
-                            @if (!empty($blog->image))
-                                {{ __('elfcms::default.change_file') }}
-                            @else
-                                {{ __('elfcms::default.choose_file') }}
-                            @endif
-                            </div>
-                            <input type="file" name="preview" id="preview">
-                        </div>
+                        <x-elfcms-input-image code="preview" value="{{$blog->preview}}" />
                     </div>
                 </div>
                 <div class="input-box colored">
                     <label for="image">{{ __('elfcms::default.image') }}</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="image_path" id="image_path" value="{{$blog->image}}">
-                        <div class="image-button">
-                            <div class="delete-image @if (empty($blog->image)) hidden @endif">&#215;</div>
-                            <div class="image-button-img">
-                            @if (!empty($blog->image))
-                                <img src="{{ asset($blog->image) }}" alt="Image">
-                            @else
-                                <img src="{{ asset('/vendor/elfcms/blog/admin/images/icons/upload.png') }}" alt="Upload file">
-                            @endif
-                            </div>
-                            <div class="image-button-text">
-                            @if (!empty($blog->image))
-                                {{ __('elfcms::default.change_file') }}
-                            @else
-                                {{ __('elfcms::default.choose_file') }}
-                            @endif
-                            </div>
-                            <input type="file" name="image" id="image">
-                        </div>
+                        <x-elfcms-input-image code="image" value="{{$blog->image}}" />
                     </div>
-                </div>
+                </div> --}}
                 <div class="input-box colored">
                     <label for="meta_keywords">{{ __('elfcms::default.meta_keywords') }}</label>
                     <div class="input-wrapper">

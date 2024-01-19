@@ -3,6 +3,7 @@
 namespace Elfcms\Blog\Models;
 
 use DateTimeInterface;
+use Elfcms\Elfcms\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,7 +34,7 @@ class BlogComment extends Model
             }
         }
         $result = [];
-        $result = self::where('parent_id',$parent)->get();
+        $result = self::where('parent_id', $parent)->get();
         if (!empty($result)) {
             foreach ($result as $i => $post) {
                 $sublevelData = self::tree($post->id);
@@ -52,11 +53,11 @@ class BlogComment extends Model
         if ($firstNew) {
             $order = 'desc';
         }
-        $result = self::where('parent_id', null)->orderBy('created_at',$order)->get();
+        $result = self::where('parent_id', null)->orderBy('created_at', $order)->get();
 
         if (!empty($result)) {
             foreach ($result as $i => $post) {
-                $sublevelData = self::children($post->id,true,false);
+                $sublevelData = self::children($post->id, true, false);
                 if (!empty($sublevelData)) {
                     $result[$i]['answers'] = $sublevelData;
                 }
@@ -75,12 +76,12 @@ class BlogComment extends Model
             }
         }
         $result = [];
-        $data = self::where('parent_id',$parent)->get();
+        $data = self::where('parent_id', $parent)->get();
         if (!empty($data)) {
             foreach ($data as $post) {
                 $post['level'] = $level;
                 $result[] = $post;
-                $sublevelData = self::flat($post->id,$level+1);
+                $sublevelData = self::flat($post->id, $level + 1);
                 if (!empty($sublevelData)) {
                     $result = array_merge($result, $sublevelData);
                 }
@@ -90,7 +91,7 @@ class BlogComment extends Model
         return $result;
     }
 
-    public static function children($id, $subchild=false, $firstNew = false)
+    public static function children($id, $subchild = false, $firstNew = false)
     {
         $order = 'asc';
         if ($firstNew) {
@@ -98,17 +99,16 @@ class BlogComment extends Model
         }
 
         $result = [];
-        $data = self::where('parent_id',$id)->orderBy('created_at',$order)->get();
+        $data = self::where('parent_id', $id)->orderBy('created_at', $order)->get();
 
         foreach ($data as $post) {
             $result[] = $post;
             if ($subchild) {
-                $subresult = self::children($post->id,$subchild);
+                $subresult = self::children($post->id, $subchild);
                 if (!empty($subresult)) {
                     $result = array_merge($result, $subresult);
                 }
             }
-
         }
 
         return $result;
@@ -129,35 +129,36 @@ class BlogComment extends Model
         return $this->belongsTo(BlogComment::class);
     }
 
-    public static function boot() {
+    public static function boot()
+    {
 
         parent::boot();
 
-        static::creating(function($post) {
+        static::creating(function ($post) {
 
             //Log::info('Creating event call: '.$post);
 
         });
 
-        static::created(function($post) {
+        static::created(function ($post) {
 
             //Log::info('Created event call: '.$post);
 
         });
 
-        static::updating(function($post) {
+        static::updating(function ($post) {
 
             //Log::info('Updating event call: '.$post);
 
         });
 
-        static::updated(function($post) {
+        static::updated(function ($post) {
 
             //Log::info('Updated event call: '.$post);
 
         });
 
-        static::deleted(function($post) {
+        static::deleted(function ($post) {
 
             //Log::info('Deleted event call: '.$post);
 

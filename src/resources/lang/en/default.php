@@ -33,6 +33,9 @@ return [
     'to_answer' => 'Answer',
     'to_comment' => 'Comment',
     'add_comment' => 'Add comment',
+    'edit_comment' => 'Comment bearbeiten',
+    'deleting_of_element' => 'Element will be deleted',
+    'are_you_sure_to_deleting_element' => 'Are you sure to deleting element',
     'are_you_sure_to_deleting_category' => 'Are you sure to deleting category',
     'are_you_sure_to_deleting_post' => 'Are you sure to deleting post',
     'edit_category' => 'Edit category #',
@@ -61,5 +64,9 @@ return [
     'search_post_name' => 'Search by posts names',
     'search_post_description' => 'Search by posts descriptions',
     'search_post_text' => 'Search by posts texts',
+    'no_categories' => 'No categories',
+    'navigation' => 'Navigation',
+    'navigator' => 'Navigator',
+    'nav' => 'Nav',
 
 ];

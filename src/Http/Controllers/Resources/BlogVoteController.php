@@ -5,7 +5,7 @@ namespace Elfcms\Blog\Http\Controllers\Resources;
 use App\Http\Controllers\Controller;
 use Elfcms\Blog\Models\BlogPost;
 use Elfcms\Blog\Models\BlogVote;
-use Elfcms\Basic\Models\User;
+use Elfcms\Elfcms\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,23 +35,20 @@ class BlogVoteController extends Controller
             $order = $request->order;
         }
         if (!empty($request->post)) {
-            $votes = BlogVote::where('post_id',$request->post)->orderBy($order, $trend)->paginate(30);
+            $votes = BlogVote::where('post_id', $request->post)->orderBy($order, $trend)->paginate(30);
 
             $post = BlogPost::find($request->post);
-        }
-        elseif (!empty($request->user)) {
-            $votes = BlogVote::where('user_id',$request->user)->orderBy($order, $trend)->paginate(30);
+        } elseif (!empty($request->user)) {
+            $votes = BlogVote::where('user_id', $request->user)->orderBy($order, $trend)->paginate(30);
 
             $user = User::find($request->user);
-        }
-        else {
+        } else {
             $votes = BlogVote::orderBy($order, $trend)->paginate(30);
-
         }
 
-        return view('elfcms::admin.blog.votes.index',[
+        return view('elfcms::admin.blog.votes.index', [
             'page' => [
-                'title' => 'Votes',
+                'title' => __('blog::default.votes'),
                 'current' => url()->current(),
             ],
             'votes' => $votes,
@@ -70,9 +67,9 @@ class BlogVoteController extends Controller
     {
         $posts = BlogPost::all();
         $votes = BlogVote::all();
-        return view('elfcms::admin.blog.votes.create',[
+        return view('elfcms::admin.blog.votes.create', [
             'page' => [
-                'title' => 'Create comment',
+                'title' => __('blog::default.vote'),
                 'current' => url()->current(),
             ],
             'posts' => $posts,
@@ -98,7 +95,7 @@ class BlogVoteController extends Controller
             'value' => 'required'
         ]);
         if (!empty($userId)) {
-            $checkVote = BlogVote::where('user_id',$userId)->where('post_id',$request->post_id)->first();
+            $checkVote = BlogVote::where('user_id', $userId)->where('post_id', $request->post_id)->first();
             //dd($checkVote);
         }
         if ($checkVote) {
@@ -111,7 +108,7 @@ class BlogVoteController extends Controller
                 return BlogPost::find($validated['post_id'])->getVote();
             }
 
-            return redirect(route('admin.blog.votes.edit',$checkVote->id))->with('voteedited','Vote edited successfully');
+            return redirect(route('admin.blog.votes.edit', $checkVote->id))->with('voteedited', 'Vote edited successfully');
         }
 
         $validated['user_id'] = $userId;
@@ -122,7 +119,7 @@ class BlogVoteController extends Controller
             return BlogPost::find($validated['post_id'])->getVote();
         }
 
-        return redirect(route('admin.blog.votes.edit',$vote->id))->with('votecreated','Vote created successfully');
+        return redirect(route('admin.blog.votes.edit', $vote->id))->with('votecreated', 'Vote created successfully');
     }
 
     /**
@@ -147,9 +144,9 @@ class BlogVoteController extends Controller
     public function edit(BlogVote $vote)
     {
         $posts = BlogPost::all();
-        return view('elfcms::admin.blog.votes.edit',[
+        return view('elfcms::admin.blog.votes.edit', [
             'page' => [
-                'title' => 'Edit vote',
+                'title' => __('blog::default.vote'),
                 'current' => url()->current(),
             ],
             'posts' => $posts,
@@ -176,7 +173,7 @@ class BlogVoteController extends Controller
 
         $vote->save();
 
-        return redirect(route('admin.blog.votes.edit',$vote->id))->with('voteedited','Vote edited successfully');
+        return redirect(route('admin.blog.votes.edit', $vote->id))->with('voteedited', 'Vote edited successfully');
     }
 
     /**
@@ -188,9 +185,9 @@ class BlogVoteController extends Controller
     public function destroy(BlogVote $vote)
     {
         if (!$vote->delete()) {
-            return redirect(route('admin.blog.votes'))->withErrors(['votedelerror'=>'Error of vote deleting']);
+            return redirect(route('admin.blog.votes'))->withErrors(['votedelerror' => 'Error of vote deleting']);
         }
 
-        return redirect(route('admin.blog.votes'))->with('votedeleted','Vote deleted successfully');
+        return redirect(route('admin.blog.votes'))->with('votedeleted', 'Vote deleted successfully');
     }
 }

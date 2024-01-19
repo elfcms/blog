@@ -21,19 +21,17 @@ class BlogNavigator extends Controller
                 'header' => '&nbsp;',
                 'text' => Session::get('categoryresult'),
             ];
-        }
-        elseif ($request->session()->has('postresult')) {
+        } elseif ($request->session()->has('postresult')) {
             $message = [
                 'type' => 'alternate',
                 'header' => '&nbsp;',
                 'text' => Session::get('postresult'),
             ];
-        }
-        elseif ($request->session()->has('errors')) {
+        } elseif ($request->session()->has('errors')) {
             $text = '';
             foreach ($request->session()->get('errors')->getBags()['default']->toArray() as $key => $errors) {
                 foreach ($errors as $error) {
-                    $text .= '<li>'. $error .'</li>';
+                    $text .= '<li>' . $error . '</li>';
                 }
             }
             $message = [
@@ -51,14 +49,13 @@ class BlogNavigator extends Controller
 
         if ($category) {
             $categories = $category->categories ?? [];
-        }
-        else {
+        } else {
             $categories = $blog->topCategories ?? [];
         }
 
-        return view('elfcms::admin.blog.nav.index',[
+        return view('elfcms::admin.blog.nav.index', [
             'page' => [
-                'title' => empty($blog->id) ? __('blog::default.blogs') : __('blog::default.blog') . ': ' . $blog->title,
+                'title' => empty($blog->id) ? __('blog::default.blogs') : __('blog::default.blog') . ': ' . $blog->name,
                 'current' => url()->current(),
             ],
             'blogs' => $blogs,

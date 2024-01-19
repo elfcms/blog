@@ -28,7 +28,7 @@
                 {{ __('elfcms::default.showing_results_for_user') }} <strong>#{{ $user->id }} {{ $user->email }}</strong>
             </div>
         @endif
-        <table class="grid-table liketable">
+        <table class="grid-table table-cols-7" style="--first-col:65px; --last-col:100px; --minw:800px">
             <thead>
                 <tr>
                     <th>
@@ -66,12 +66,12 @@
                 <tr data-id="{{ $like->id }}" class="">
                     <td>{{ $like->id }}</td>
                     <td>
-                        <a href="{{ route('admin.blog.likes',['post'=>$like->post->id]) }}">
+                        <a href="{{ route('admin.blog.posts.edit',['post'=>$like->post]) }}">
                             #{{ $like->post->id }} {{ $like->post->name }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.blog.likes',['user'=>$like->user_id]) }}">
+                        <a href="{{ route('admin.user.users.edit',['user'=>$like->user]) }}">
                             {{ $like->user->email }}
                         </a>
                     </td>
@@ -84,14 +84,14 @@
                     </td> --}}
                     <td>{{ $like->created_at }}</td>
                     <td>{{ $like->updated_at }}</td>
-                    <td class="button-column">
-                        <a href="{{ route('admin.blog.likes.edit',$like->id) }}" class="default-btn edit-button">{{ __('elfcms::default.edit') }}</a>
+                    <td class="button-column non-text-buttons">
+                        <a href="{{ route('admin.blog.likes.edit',$like->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.blog.likes.destroy',$like->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $like->id }}">
                             <input type="hidden" name="name" value="{{ $like->name }}">
-                            <button type="submit" class="default-btn delete-button">{{ __('elfcms::default.delete') }}</button>
+                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                     </td>
                 </tr>
@@ -112,8 +112,8 @@
                         likeName = this.querySelector('[name="name"]').value,
                         self = this
                     popup({
-                        title:'{{ __('elfcms::default.deleting_of_element') }}' + likeId,
-                        content:'<p>{{ __('elfcms::default.are_you_sure_to_deleting_like') }} "' + likeName + '" (ID ' + likeId + ')?</p>',
+                        title:'{{ __('blog::default.deleting_of_element') }}',
+                        content:'<p>{{ __('blog::default.are_you_sure_to_deleting_element') }} (ID ' + likeId + ')</p>',
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',

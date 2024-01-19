@@ -16,35 +16,24 @@
     @endif
 
     <div class="post-form">
-        <h3>{{ __('elfcms::default.create_comment') }}</h3>
+        <h3>{{ __('blog::default.edit_comment') }}</h3>
         <form action="{{ route('admin.blog.comments.update',$comment->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="colored-rows-box">
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="active"
-                                id="active"
-                                checked
-                            >
-                            <i></i>
-                            <label for="active">
-                                {{ __('elfcms::default.active') }}
-                            </label>
-                        </div>
-                    </div>
+                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" style="blue" :checked="$comment->active" />
                 </div>
                 <div class="input-box colored">
                     <label for="post_id">{{ __('elfcms::default.post') }}</label>
                     <div class="input-wrapper">
-                        <select name="post_id" id="post_id">
+                        {{-- <select name="post_id" id="post_id">
                         @foreach ($posts as $post)
                             <option value="{{ $post->id }}" @if ($post->active != 1) class="inactive" @endif @if ($post->id == $comment->post_id) selected @endif>{{ $post->name }}@if ($post->active != 1) [{{ __('elfcms::default.inactive') }}] @endif</option>
                         @endforeach
-                        </select>
+                        </select> --}}
+                        #{{ $comment->post->id }} {{ $comment->post->name }}
+                        <input type="hidden" name="post_id" value="{{ $comment->post->id }}">
                     </div>
                 </div>
                 <div class="input-box colored">

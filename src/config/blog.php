@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'version' => '0.5.1',
+    'version' => '0.9.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +21,23 @@ return [
     |
     */
 
-    'basic_package' => '1.1.0',
+    'basic_package' => '1.2.1',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Files
+    |--------------------------------------------------------------------------
+    |
+    | File upload options
+    |
+    */
+
+    "files" => [
+        "max_size" => [
+            "preview" => 768,
+            "image" => 1024
+        ]
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -36,25 +52,15 @@ return [
         [
             "title" => "Blog",
             "lang_title" => "blog::default.blog",
-            "route" => "admin.blog",
+            "route" => "admin.blog.nav",
             "parent_route" => "admin.blog",
             "icon" => "/vendor/elfcms/blog/admin/images/icons/blog.png",
             "position" => 200,
             "submenu" => [
                 [
-                    "title" => "Blogs",
-                    "lang_title" => "blog::default.blogs",
-                    "route" => "admin.blog.blogs"
-                ],
-                [
-                    "title" => "Categories",
-                    "lang_title" => "blog::default.categories",
-                    "route" => "admin.blog.categories"
-                ],
-                [
-                    "title" => "Posts",
-                    "lang_title" => "blog::default.posts",
-                    "route" => "admin.blog.posts"
+                    "title" => "Navigation",
+                    "lang_title" => "blog::default.navigation",
+                    "route" => "admin.blog.nav"
                 ],
                 [
                     "title" => "Tags",
@@ -113,5 +119,24 @@ return [
                 "description" => "blog::default.search_category",
             ],
         ]
+    ],
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Access control
+    |--------------------------------------------------------------------------
+    |
+    | Define access rules for admin panel pages.
+    |
+    */
+
+    "access_routes" => [
+        [
+            "title" => "Blog",
+            "lang_title" => "blog::default.blog",
+            "route" => "admin.blog",
+            "actions" => ["read", "write"],
+        ],
     ],
 ];

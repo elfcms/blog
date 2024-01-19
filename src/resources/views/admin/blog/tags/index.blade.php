@@ -18,7 +18,7 @@
     </div>
     @endif
     <div class="widetable-wrapper">
-        <table class="grid-table tagtable">
+        <table class="grid-table table-cols-5" style="--first-col:65px; --last-col:100px; --minw:800px">
             <thead>
                 <tr>
                     <th>
@@ -51,14 +51,14 @@
                     </td>
                     <td>{{ $tag->created_at }}</td>
                     <td>{{ $tag->updated_at }}</td>
-                    <td class="button-column">
-                        <a href="{{ route('admin.blog.tags.edit',$tag->id) }}" class="default-btn edit-button">{{ __('elfcms::default.edit') }}</a>
+                    <td class="button-column non-text-buttons">
+                        <a href="{{ route('admin.blog.tags.edit',$tag->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.blog.tags.destroy',$tag->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $tag->id }}">
                             <input type="hidden" name="name" value="{{ $tag->name }}">
-                            <button type="submit" class="default-btn delete-button">{{ __('elfcms::default.delete') }}</button>
+                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                     </td>
                 </tr>

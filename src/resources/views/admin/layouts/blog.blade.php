@@ -4,7 +4,7 @@
 
 <div class="big-container">
 
-    <nav class="pagenav">
+    {{-- <nav class="pagenav">
         <ul>
             <li>
                 <a href="{{ route('admin.blog.blogs') }}" class="button button-left">{{ __('blog::default.blogs') }}</a>
@@ -32,7 +32,7 @@
                 <a href="{{ route('admin.blog.likes') }}" class="button">{{ __('blog::default.likes') }}</a>
             </li>
         </ul>
-    </nav>
+    </nav> --}}
     @section('blogpage-content')
     @show
 

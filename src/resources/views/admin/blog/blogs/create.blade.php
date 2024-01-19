@@ -22,20 +22,7 @@
             @method('POST')
             <div class="colored-rows-box">
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="active"
-                                id="active"
-                                checked
-                            >
-                            <i></i>
-                            <label for="active">
-                                {{ __('elfcms::default.active') }}
-                            </label>
-                        </div>
-                    </div>
+                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" checked style="blue" />
                 </div>
                 <div class="input-box colored">
                     <label for="name">{{ __('elfcms::default.name') }}</label>
@@ -61,38 +48,18 @@
                         <textarea name="description" id="description" cols="30" rows="10"></textarea>
                     </div>
                 </div>
-                <div class="input-box colored">
+                {{-- <div class="input-box colored">
                     <label for="preview">{{ __('elfcms::default.preview') }}</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="preview_path" id="preview_path">
-                        <div class="image-button">
-                            <div class="delete-image hidden">&#215;</div>
-                            <div class="image-button-img">
-                                <img src="{{ asset('/vendor/elfcms/blog/admin/images/icons/upload.png') }}" alt="Upload file">
-                            </div>
-                            <div class="image-button-text">
-                                {{ __('elfcms::default.choose_file') }}
-                            </div>
-                            <input type="file" name="preview" id="preview">
-                        </div>
+                        <x-elfcms-input-image code="preview" />
                     </div>
                 </div>
                 <div class="input-box colored">
                     <label for="image">{{ __('elfcms::default.image') }}</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="image_path" id="image_path">
-                        <div class="image-button">
-                            <div class="delete-image hidden">&#215;</div>
-                            <div class="image-button-img">
-                                <img src="{{ asset('/vendor/elfcms/blog/admin/images/icons/upload.png') }}" alt="Upload file">
-                            </div>
-                            <div class="image-button-text">
-                                {{ __('elfcms::default.choose_file') }}
-                            </div>
-                            <input type="file" name="image" id="image">
-                        </div>
+                        <x-elfcms-input-image code="image" />
                     </div>
-                </div>
+                </div> --}}
                 <div class="input-box colored">
                     <label for="meta_keywords">{{ __('elfcms::default.meta_keywords') }}</label>
                     <div class="input-wrapper">

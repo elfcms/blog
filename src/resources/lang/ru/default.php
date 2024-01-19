@@ -33,6 +33,9 @@ return [
     'to_answer' => 'Ответ',
     'to_comment' => 'Комментировать',
     'add_comment' => 'Добавить комментарий',
+    'edit_comment' => 'Изменить комментарий',
+    'deleting_of_element' => 'Элемент будет удален',
+    'are_you_sure_to_deleting_element' => 'Вы уверены, что хотите удалить элемент',
     'are_you_sure_to_deleting_category' => 'Вы уверены, что хотите удалить категорию',
     'are_you_sure_to_deleting_post' => 'Вы уверены, что хотите удалить пост',
     'edit_category' => 'Изменить категорию #',
@@ -61,4 +64,8 @@ return [
     'search_post_name' => 'Поиск по названиям постов',
     'search_post_description' => 'Поиск по описаниям постов',
     'search_post_text' => 'Поиск по тексту постов',
+    'no_categories' => 'Нет категорий',
+    'navigation' => 'Навигация',
+    'navigator' => 'Навигатор',
+    'nav' => 'Навигация',
 ];

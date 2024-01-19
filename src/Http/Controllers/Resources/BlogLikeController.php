@@ -5,7 +5,7 @@ namespace Elfcms\Blog\Http\Controllers\Resources;
 use App\Http\Controllers\Controller;
 use Elfcms\Blog\Models\BlogPost;
 use Elfcms\Blog\Models\BlogLike;
-use Elfcms\Basic\Models\User;
+use Elfcms\Elfcms\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,23 +35,20 @@ class BlogLikeController extends Controller
             $order = $request->order;
         }
         if (!empty($request->post)) {
-            $likes = BlogLike::where('post_id',$request->post)->orderBy($order, $trend)->paginate(30);
+            $likes = BlogLike::where('blog_posts_id', $request->post)->orderBy($order, $trend)->paginate(30);
 
             $post = BlogPost::find($request->post);
-        }
-        elseif (!empty($request->user)) {
-            $likes = BlogLike::where('user_id',$request->user)->orderBy($order, $trend)->paginate(30);
+        } elseif (!empty($request->user)) {
+            $likes = BlogLike::where('user_id', $request->user)->orderBy($order, $trend)->paginate(30);
 
             $user = User::find($request->user);
-        }
-        else {
+        } else {
             $likes = BlogLike::orderBy($order, $trend)->paginate(30);
-
         }
 
-        return view('elfcms::admin.blog.likes.index',[
+        return view('elfcms::admin.blog.likes.index', [
             'page' => [
-                'title' => 'likes',
+                'title' => __('blog::default.likes'),
                 'current' => url()->current(),
             ],
             'likes' => $likes,
@@ -70,14 +67,14 @@ class BlogLikeController extends Controller
     {
         $posts = BlogPost::all();
         $likes = BlogLike::all();
-        return view('elfcms::admin.blog.likes.create',[
+        return view('elfcms::admin.blog.likes.create', [
             'page' => [
-                'title' => 'Create comment',
+                'title' => __('blog::default.like'),
                 'current' => url()->current(),
             ],
             'posts' => $posts,
             'likes' => $likes,
-            'post_id' => $request->post_id,
+            'blog_posts_id' => $request->blog_posts_id,
         ]);
     }
 
@@ -94,19 +91,16 @@ class BlogLikeController extends Controller
             $userId = Auth::user()->id;
         }
         $validated = $request->validate([
-            'post_id' => 'required',
+            'blog_posts_id' => 'required',
             'value' => 'required'
         ]);
         if ($validated['value'] > 0) {
             $validated['value'] = 1;
-        }
-        elseif ($validated['value'] < 0) {
+        } elseif ($validated['value'] < 0) {
             $validated['value'] = -1;
         }
         if (!empty($userId)) {
-            $checklike = BlogLike::where('user_id',$userId)->where('post_id',$request->post_id)->first();
-            //dd($checklike);
-
+            $checklike = BlogLike::where('user_id', $userId)->where('blog_posts_id', $request->blog_posts_id)->first();
         }
         if ($checklike) {
 
@@ -114,16 +108,16 @@ class BlogLikeController extends Controller
                 $validated['value'] = 0;
             }
 
-            $checklike->post_id = $validated['post_id'];
+            $checklike->blog_posts_id = $validated['blog_posts_id'];
             $checklike->value = $validated['value'];
 
             $checklike->save();
 
             if ($request->ajax()) {
-                return BlogPost::find($validated['post_id'])->getLike();
+                return BlogPost::find($validated['blog_posts_id'])->getLike();
             }
 
-            return redirect(route('admin.blog.likes.edit',$checklike->id))->with('likeedited','like edited successfully');
+            return redirect(route('admin.blog.likes.edit', $checklike->id))->with('likeedited', 'like edited successfully');
         }
 
         $validated['user_id'] = $userId;
@@ -131,10 +125,10 @@ class BlogLikeController extends Controller
         $like = BlogLike::create($validated);
 
         if ($request->ajax()) {
-            return BlogPost::find($validated['post_id'])->getLike();
+            return BlogPost::find($validated['blog_posts_id'])->getLike();
         }
 
-        return redirect(route('admin.blog.likes.edit',$like->id))->with('likecreated','like created successfully');
+        return redirect(route('admin.blog.likes.edit', $like->id))->with('likecreated', 'like created successfully');
     }
 
     /**
@@ -159,9 +153,9 @@ class BlogLikeController extends Controller
     public function edit(BlogLike $like)
     {
         $posts = BlogPost::all();
-        return view('elfcms::admin.blog.likes.edit',[
+        return view('elfcms::admin.blog.likes.edit', [
             'page' => [
-                'title' => 'Edit like',
+                'title' => __('blog::default.like'),
                 'current' => url()->current(),
             ],
             'posts' => $posts,
@@ -179,23 +173,22 @@ class BlogLikeController extends Controller
     public function update(Request $request, BlogLike $like)
     {
         $validated = $request->validate([
-            'post_id' => 'required',
+            'blog_posts_id' => 'required',
             'value' => 'required'
         ]);
 
         if ($validated['value'] > 0) {
             $validated['value'] = 1;
-        }
-        elseif ($validated['value'] < 0) {
+        } elseif ($validated['value'] < 0) {
             $validated['value'] = -1;
         }
 
-        $like->post_id = $validated['post_id'];
+        $like->blog_posts_id = $validated['blog_posts_id'];
         $like->value = $validated['value'];
 
         $like->save();
 
-        return redirect(route('admin.blog.likes.edit',$like->id))->with('likeedited','like edited successfully');
+        return redirect(route('admin.blog.likes.edit', $like->id))->with('likeedited', 'like edited successfully');
     }
 
     /**
@@ -207,9 +200,9 @@ class BlogLikeController extends Controller
     public function destroy(BlogLike $like)
     {
         if (!$like->delete()) {
-            return redirect(route('admin.blog.likes'))->withErrors(['likedelerror'=>'Error of like deleting']);
+            return redirect(route('admin.blog.likes'))->withErrors(['likedelerror' => 'Error of like deleting']);
         }
 
-        return redirect(route('admin.blog.likes'))->with('likedeleted','like deleted successfully');
+        return redirect(route('admin.blog.likes'))->with('likedeleted', 'like deleted successfully');
     }
 }

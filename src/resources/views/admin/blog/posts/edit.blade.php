@@ -14,49 +14,31 @@
         </ul>
     </div>
     @endif
-
     <div class="post-form">
         <h3>{{ __('elfcms::default.edit_post') }}{{ $post->id }}</h3>
-        <form action="{{ route('admin.blog.posts.update',$post->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.blog.posts.update',$post) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="colored-rows-box">
                 <input type="hidden" name="id" id="id" value="{{ $post->id }}">
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="active"
-                                id="active"
-                                @if ($post->active == 1)
-                                checked
-                                @endif
-                            >
-                            <i></i>
-                            <label for="active">
-                                {{ __('elfcms::default.active') }}
-                            </label>
-                        </div>
-                    </div>
+                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" style="blue" :checked="$post->active" />
                 </div>
                 <div class="input-box colored">
                     <label for="blog_id">{{ __('blog::default.blog') }}</label>
                     <div class="input-wrapper">
-                        <select name="blog_id" id="blog_id" data-dep="blog" data-rule="blog">
-                            <option value="">{{ __('elfcms::default.none') }}</option>
-                        @foreach ($blogs as $blog)
-                            <option value="{{ $blog->id }}" @class(['inactive' => $blog->active != 1]) @if ($blog->id == $post->blog_id) selected @endif>{{ $blog->name }}@if ($blog->active != 1) [{{ __('elfcms::default.inactive') }}] @endif</option>
-                        @endforeach
-                        </select>
+                        <div class="input-wrapper">
+                            #{{ $post->blog->id }} {{ $post->blog->name }}
+                            <input type="hidden" name="blog_id" value="{{ $post->blog->id }}">
+                        </div>
                     </div>
                 </div>
                 <div class="input-box colored">
                     <label for="categories">{{ __('elfcms::default.categories') }}</label>
                     <div class="input-wrapper">
-                        <select name="categories[]" id="categories" data-cond="blog" multiple>
-                        @foreach ($categories as $post)
-                            <option value="{{ $post->id }}" @class(['inactive' => $post->active != 1, 'hidden' => $post->blog_id != $post->blog_id]) data-blog="{{ $post->blog_id }}" @if (in_array($post->id, $postCategories)) selected @endif>{{ $post->name }}@if ($post->active != 1) [{{ __('elfcms::default.inactive') }}] @endif</option>
+                        <select name="categories[]" id="categories" data-cond="blog">
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" @class(['inactive' => $category->active != 1, 'hidden' => $category->blog_id != $category->blog_id]) data-blog="{{ $category->blog_id }}" @if (in_array($category->id, $postCategories)) selected @endif>{{ $category->name }}@if ($category->active != 1) [{{ __('elfcms::default.inactive') }}] @endif</option>
                         @endforeach
                         </select>
                     </div>
@@ -102,52 +84,17 @@
                         <textarea name="text" id="text" cols="30" rows="10">{{ $post->text }}</textarea>
                     </div>
                 </div>
+
                 <div class="input-box colored">
                     <label for="preview">{{ __('elfcms::default.preview') }}</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="preview_path" id="preview_path" value="{{$post->preview}}">
-                        <div class="image-button">
-                            <div class="delete-image @if (empty($post->preview)) hidden @endif">&#215;</div>
-                            <div class="image-button-img">
-                            @if (!empty($post->preview))
-                                <img src="{{ asset($post->preview) }}" alt="Preview">
-                            @else
-                                <img src="{{ asset('/vendor/elfcms/blog/admin/images/icons/upload.png') }}" alt="Upload file">
-                            @endif
-                            </div>
-                            <div class="image-button-text">
-                            @if (!empty($post->preview))
-                                {{ __('elfcms::default.change_file') }}
-                            @else
-                                {{ __('elfcms::default.choose_file') }}
-                            @endif
-                            </div>
-                            <input type="file" name="preview" id="preview">
-                        </div>
+                        <x-elfcms-input-image code="preview" value="{{$post->preview}}" />
                     </div>
                 </div>
                 <div class="input-box colored">
                     <label for="image">{{ __('elfcms::default.image') }}</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="image_path" id="image_path" value="{{$post->image}}">
-                        <div class="image-button">
-                            <div class="delete-image @if (empty($post->image)) hidden @endif">&#215;</div>
-                            <div class="image-button-img">
-                            @if (!empty($post->image))
-                                <img src="{{ asset($post->image) }}" alt="Image">
-                            @else
-                                <img src="{{ asset('/vendor/elfcms/blog/admin/images/icons/upload.png') }}" alt="Upload file">
-                            @endif
-                            </div>
-                            <div class="image-button-text">
-                            @if (!empty($post->image))
-                                {{ __('elfcms::default.change_file') }}
-                            @else
-                                {{ __('elfcms::default.choose_file') }}
-                            @endif
-                            </div>
-                            <input type="file" name="image" id="image">
-                        </div>
+                        <x-elfcms-input-image code="image" value="{{$post->image}}" />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -170,7 +117,7 @@
                         <div class="tag-form-wrapper">
                             <div class="tag-list-box">
                                 @foreach ($post->tags as $tag)
-                                <div class="tag-post-box" data-id="{{ $tag->id }}">
+                                <div class="tag-item-box" data-id="{{ $tag->id }}">
                                     <span class="tag-post-name">{{ $tag->name }}</span>
                                     <span class="tag-post-remove" onclick="removeTagFromList(this)">&#215;</span>
                                     <input type="hidden" name="tags[]" value="{{ $tag->id }}">

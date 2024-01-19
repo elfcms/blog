@@ -22,29 +22,15 @@
             @method('PUT')
             <div class="colored-rows-box">
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="active"
-                                id="active"
-                                checked
-                            >
-                            <i></i>
-                            <label for="active">
-                                {{ __('elfcms::default.active') }}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-box colored">
                     <label for="post_id">{{ __('elfcms::default.post') }}</label>
                     <div class="input-wrapper">
-                        <select name="post_id" id="post_id">
+                        {{-- <select name="post_id" id="post_id">
                         @foreach ($posts as $post)
                             <option value="{{ $post->id }}" @if ($post->active != 1) class="inactive" @endif @if ($post->id == $like->post_id) selected @endif>{{ $post->name }}@if ($post->active != 1) [{{ __('elfcms::default.inactive') }}] @endif</option>
                         @endforeach
-                        </select>
+                        </select> --}}
+                        #{{ $like->post->id }} {{ $like->post->name }}
+                        <input type="hidden" name="blog_posts_id" value="{{ $like->post->id }}">
                     </div>
                 </div>
                 <div class="input-box colored">

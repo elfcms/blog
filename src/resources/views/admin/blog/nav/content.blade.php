@@ -1,14 +1,14 @@
 {{-- <div class="blog-nav-up-ib">
-    <a href="{{ route('admin.blog.nav',['blog'=>$blog]) }}">{{ $blog->title }}</a>
+    <a href="{{ route('admin.blog.nav',['blog'=>$blog]) }}">{{ $blog->name }}</a>
 </div>
 @if ($category)
 <div class="blog-nav-up-cat">
-    <a href="{{ route('admin.blog.nav',['blog'=>$blog,'category'=>$category]) }}">{{ $category->title }}</a>
+    <a href="{{ route('admin.blog.nav',['blog'=>$blog,'category'=>$category]) }}">{{ $category->name }}</a>
 </div>
 @endif --}}
-@if ($category || $blog->title)
+@if ($category || $blog->name)
 <h4 class="blog-nav-title">
-    {{ $category->title ?? $blog->title ?? __('blog::default.blogs') }}
+    {{ $category->name ?? $blog->name ?? __('blog::default.blogs') }}
 </h4>
 <div class="blog-nav-content">
     @if ($category)
@@ -41,7 +41,7 @@
         @endif
         @if (!empty($blog->posts))
         <div class="blog-nav-posts blog-nav-dnd-area blog-nav-dnd-area-post" data-container="post">
-            @foreach ($blog->topItems()->position()->get() as $post)
+            @foreach ($blog->topPosts()->position()->get() as $post)
                 @include('elfcms::admin.blog.nav.partials.post-line')
             @endforeach
         </div>

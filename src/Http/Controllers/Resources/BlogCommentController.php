@@ -5,7 +5,7 @@ namespace Elfcms\Blog\Http\Controllers\Resources;
 use App\Http\Controllers\Controller;
 use Elfcms\Blog\Models\BlogComment;
 use Elfcms\Blog\Models\BlogPost;
-use Elfcms\Basic\Models\User;
+use Elfcms\Elfcms\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,26 +37,22 @@ class BlogCommentController extends Controller
             $order = $request->order;
         }
         if (!empty($request->post)) {
-            $comments = BlogComment::where('post_id',$request->post)->orderBy($order, $trend)->paginate(30);
+            $comments = BlogComment::where('post_id', $request->post)->orderBy($order, $trend)->paginate(30);
 
             $post = BlogPost::find($request->post);
-        }
-        elseif (!empty($request->user)) {
-            $comments = BlogComment::where('user_id',$request->user)->orderBy($order, $trend)->paginate(30);
+        } elseif (!empty($request->user)) {
+            $comments = BlogComment::where('user_id', $request->user)->orderBy($order, $trend)->paginate(30);
 
             $user = User::find($request->user);
-        }
-        elseif (!empty($request->parent)) {
-            $comments = BlogComment::where('parent_id',$request->parent)->orderBy($order, $trend)->paginate(30);
+        } elseif (!empty($request->parent)) {
+            $comments = BlogComment::where('parent_id', $request->parent)->orderBy($order, $trend)->paginate(30);
 
             $parent = BlogComment::find($request->parent);
-        }
-        else {
+        } else {
             $comments = BlogComment::orderBy($order, $trend)->paginate(30);
-
         }
 
-        return view('elfcms::admin.blog.comments.index',[
+        return view('elfcms::admin.blog.comments.index', [
             'page' => [
                 'title' => 'Comments',
                 'current' => url()->current(),
@@ -78,7 +74,7 @@ class BlogCommentController extends Controller
     {
         $posts = BlogPost::all();
         $comments = BlogComment::all();
-        return view('elfcms::admin.blog.comments.create',[
+        return view('elfcms::admin.blog.comments.create', [
             'page' => [
                 'title' => 'Create comment',
                 'current' => url()->current(),
@@ -98,7 +94,6 @@ class BlogCommentController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->parent_id);
         $validated = $request->validate([
             'post_id' => 'required',
             'text' => 'required'
@@ -120,7 +115,7 @@ class BlogCommentController extends Controller
             return $comment;
         }
 
-        return redirect(route('admin.blog.comments.edit',$comment->id))->with('commentcreated','Comment created successfully');
+        return redirect(route('admin.blog.comments.edit', $comment->id))->with('commentcreated', 'Comment created successfully');
     }
 
     /**
@@ -146,7 +141,7 @@ class BlogCommentController extends Controller
     {
         $posts = BlogPost::all();
         $comments = BlogComment::all();
-        return view('elfcms::admin.blog.comments.edit',[
+        return view('elfcms::admin.blog.comments.edit', [
             'page' => [
                 'title' => 'Edit comment',
                 'current' => url()->current(),
@@ -171,7 +166,7 @@ class BlogCommentController extends Controller
 
             $comment->save();
 
-            return redirect(route('admin.blog.comments'))->with('commentedited','Comment edited successfully');
+            return redirect(route('admin.blog.comments'))->with('commentedited', 'Comment edited successfully');
         }
         $validated = $request->validate([
             'post_id' => 'required',
@@ -185,7 +180,7 @@ class BlogCommentController extends Controller
 
         $comment->save();
 
-        return redirect(route('admin.blog.comments.edit',$comment->id))->with('commentedited','Comment edited successfully');
+        return redirect(route('admin.blog.comments.edit', $comment->id))->with('commentedited', 'Comment edited successfully');
     }
 
     /**
@@ -197,9 +192,9 @@ class BlogCommentController extends Controller
     public function destroy(BlogComment $comment)
     {
         if (!$comment->delete()) {
-            return redirect(route('admin.blog.comments'))->withErrors(['commentdelerror'=>'Error of comment deleting']);
+            return redirect(route('admin.blog.comments'))->withErrors(['commentdelerror' => 'Error of comment deleting']);
         }
 
-        return redirect(route('admin.blog.comments'))->with('commentdeleted','Comment deleted successfully');
+        return redirect(route('admin.blog.comments'))->with('commentdeleted', 'Comment deleted successfully');
     }
 }

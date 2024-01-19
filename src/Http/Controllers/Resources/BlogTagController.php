@@ -28,9 +28,9 @@ class BlogTagController extends Controller
         }
         $tags = BlogTag::orderBy($order, $trend)->paginate(30);
 
-        return view('elfcms::admin.blog.tags.index',[
+        return view('elfcms::admin.blog.tags.index', [
             'page' => [
-                'title' => 'Tags',
+                'title' => __('blog::default.tags'),
                 'current' => url()->current(),
             ],
             'tags' => $tags
@@ -44,9 +44,9 @@ class BlogTagController extends Controller
      */
     public function create()
     {
-        return view('elfcms::admin.blog.tags.create',[
+        return view('elfcms::admin.blog.tags.create', [
             'page' => [
-                'title' => 'Create tag',
+                'title' => __('blog::default.tag'),
                 'current' => url()->current(),
             ],
         ]);
@@ -60,7 +60,6 @@ class BlogTagController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->toArray();
         $validated = $request->validate([
             'name' => 'required|unique:Elfcms\Blog\Models\BlogTag,name'
         ]);
@@ -73,12 +72,12 @@ class BlogTagController extends Controller
             if ($tag) {
                 $result = 'success';
                 $message = __('elf.tag_created_successfully');
-                $data = ['id'=> $tag->id];
+                $data = ['id' => $tag->id];
             }
-            return json_encode(['result'=>$result,'message'=>$message,'data'=>$data]);
+            return json_encode(['result' => $result, 'message' => $message, 'data' => $data]);
         }
 
-        return redirect(route('admin.blog.tags.edit',$tag->id))->with('tagcreated',__('elf.tag_created_successfully'));
+        return redirect(route('admin.blog.tags.edit', $tag->id))->with('tagcreated', __('elf.tag_created_successfully'));
     }
 
     /**
@@ -103,9 +102,9 @@ class BlogTagController extends Controller
     public function edit(BlogTag $tag)
     {
 
-        return view('elfcms::admin.blog.tags.edit',[
+        return view('elfcms::admin.blog.tags.edit', [
             'page' => [
-                'title' => 'Edit tag #' . $tag->id,
+                'title' => __('blog::default.edit_tag'),
                 'current' => url()->current(),
             ],
             'tag' => $tag
@@ -125,8 +124,8 @@ class BlogTagController extends Controller
             'name' => 'required'
         ]);
 
-        if (BlogTag::where('name',$validated['name'])->where('id','<>',$tag->id)->first()) {
-            return redirect(route('admin.blog.tags.edit',$tag->id))->withErrors([
+        if (BlogTag::where('name', $validated['name'])->where('id', '<>', $tag->id)->first()) {
+            return redirect(route('admin.blog.tags.edit', $tag->id))->withErrors([
                 'name' => 'Tag already exists'
             ]);
         }
@@ -134,7 +133,7 @@ class BlogTagController extends Controller
         $tag->name = $validated['name'];
         $tag->save();
 
-        return redirect(route('admin.blog.tags.edit',$tag->id))->with('tagedited',__('elf.tag_edited_successfully'));
+        return redirect(route('admin.blog.tags.edit', $tag->id))->with('tagedited', __('elf.tag_edited_successfully'));
     }
 
     /**
@@ -146,10 +145,10 @@ class BlogTagController extends Controller
     public function destroy(BlogTag $tag)
     {
         if (!$tag->delete()) {
-            return redirect(route('admin.blog.tags'))->withErrors(['tagdelerror'=>'Error of tag deleting']);
+            return redirect(route('admin.blog.tags'))->withErrors(['tagdelerror' => 'Error of tag deleting']);
         }
 
-        return redirect(route('admin.blog.tags'))->with('tagdeleted','Tag deleted successfully');
+        return redirect(route('admin.blog.tags'))->with('tagdeleted', 'Tag deleted successfully');
     }
 
     /**
@@ -161,7 +160,6 @@ class BlogTagController extends Controller
     public function addNotExist(Request $request)
     {
         if ($request->ajax()) {
-            //return $request->toArray();
             $validated = $request->validate([
                 'name' => 'required'
             ]);
@@ -170,22 +168,21 @@ class BlogTagController extends Controller
             $message = __('elf.error_of_tag_created');
             $data = [];
 
-            if ($tagByName = BlogTag::where('name',$validated['name'])->first()) {
+            if ($tagByName = BlogTag::where('name', $validated['name'])->first()) {
                 $result = 'exist';
                 $message = 'Tag already exist';
-                $data = ['id'=> $tagByName->id,'name'=>$tagByName->name];
-            }
-            else {
+                $data = ['id' => $tagByName->id, 'name' => $tagByName->name];
+            } else {
                 $tag = BlogTag::create($validated);
 
                 if ($tag) {
                     $result = 'success';
                     $message = __('elf.tag_created_successfully');
-                    $data = ['id'=> $tag->id,'name'=>$validated['name']];
+                    $data = ['id' => $tag->id, 'name' => $validated['name']];
                 }
             }
 
-            return json_encode(['result'=>$result,'message'=>$message,'data'=>$data]);
+            return json_encode(['result' => $result, 'message' => $message, 'data' => $data]);
         }
     }
 }

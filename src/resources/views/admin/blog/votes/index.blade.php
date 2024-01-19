@@ -28,7 +28,7 @@
                 {{ __('elfcms::default.showing_results_for_user') }} <strong>#{{ $user->id }} {{ $user->email }}</strong>
             </div>
         @endif
-        <table class="grid-table votetable">
+        <table class="grid-table table-cols-7" style="--first-col:65px; --last-col:100px; --minw:800px">
             <thead>
                 <tr>
                     <th>
@@ -84,14 +84,14 @@
                     </td> --}}
                     <td>{{ $vote->created_at }}</td>
                     <td>{{ $vote->updated_at }}</td>
-                    <td class="button-column">
-                        <a href="{{ route('admin.blog.votes.edit',$vote->id) }}" class="default-btn edit-button">{{ __('elfcms::default.edit') }}</a>
+                    <td class="button-column non-text-buttons">
+                        <a href="{{ route('admin.blog.votes.edit',$vote->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.blog.votes.destroy',$vote->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $vote->id }}">
                             <input type="hidden" name="name" value="{{ $vote->name }}">
-                            <button type="submit" class="default-btn delete-button">{{ __('elfcms::default.delete') }}</button>
+                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                     </td>
                 </tr>
@@ -112,8 +112,8 @@
                         voteName = this.querySelector('[name="name"]').value,
                         self = this
                     popup({
-                        title:'{{ __('elfcms::default.deleting_of_element') }}' + voteId,
-                        content:'<p>{{ __('elfcms::default.are_you_sure_to_deleting_vote') }} "' + voteName + '" (ID ' + voteId + ')?</p>',
+                        title:'{{ __('blog::default.deleting_of_element') }}',
+                        content:'<p>{{ __('blog::default.are_you_sure_to_deleting_element') }} "' + voteName + '" (ID ' + voteId + ')?</p>',
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
