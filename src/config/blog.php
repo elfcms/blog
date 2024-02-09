@@ -55,7 +55,7 @@ return [
             "route" => "admin.blog.nav",
             "parent_route" => "admin.blog",
             "icon" => "/vendor/elfcms/blog/admin/images/icons/blog.png",
-            "position" => 200,
+            "position" => 400,
             "submenu" => [
                 [
                     "title" => "Navigation",
