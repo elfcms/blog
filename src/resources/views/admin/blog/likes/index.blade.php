@@ -76,12 +76,6 @@
                         </a>
                     </td>
                     <td>{{ $like->value }}</td>
-                {{-- <td class="image-cell">
-                        <img src="{{ asset($like->preview) }}" alt="">
-                    </td>
-                    <td class="image-cell">
-                        <img src="{{ asset($like->image) }}" alt="">
-                    </td> --}}
                     <td>{{ $like->created_at }}</td>
                     <td>{{ $like->updated_at }}</td>
                     <td class="button-column non-text-buttons">

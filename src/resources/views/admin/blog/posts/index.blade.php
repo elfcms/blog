@@ -104,12 +104,6 @@
                         </a>
                     @endif
                     </td>
-                {{-- <td class="image-cell">
-                        <img src="{{ asset($post->preview) }}" alt="">
-                    </td>
-                    <td class="image-cell">
-                        <img src="{{ asset($post->image) }}" alt="">
-                    </td> --}}
                     <td>{{ $post->created_at }}</td>
                     <td>{{ $post->updated_at }}</td>
                     <td>{{ $post->public_time }}</td>

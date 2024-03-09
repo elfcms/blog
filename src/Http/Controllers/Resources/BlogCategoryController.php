@@ -107,12 +107,10 @@ class BlogCategoryController extends Controller
         $image_path = '';
         $preview_path = '';
         if (!empty($request->file()['image'])) {
-            $image = $request->file()['image']->store('public/elfcms/blog/categories/image');
-            $image_path = str_ireplace('public/', '/storage/', $image);
+            $image_path = $request->file()['image']->store('elfcms/blog/categories/image');
         }
         if (!empty($request->file()['preview'])) {
-            $preview = $request->file()['preview']->store('public/elfcms/blog/categories/preview');
-            $preview_path = str_ireplace('public/', '/storage/', $preview);
+            $preview_path = $request->file()['preview']->store('elfcms/blog/categories/preview');
         }
 
         $public_time = $request->public_time[0];
@@ -230,12 +228,10 @@ class BlogCategoryController extends Controller
             $image_path = $request->image_path;
             $preview_path = $request->preview_path;
             if (!empty($request->file()['image'])) {
-                $image = $request->file()['image']->store('public/blog/categories/image');
-                $image_path = str_ireplace('public/', '/storage/', $image);
+                $image_path = $request->file()['image']->store('blog/categories/image');
             }
             if (!empty($request->file()['preview'])) {
-                $preview = $request->file()['preview']->store('public/blog/categories/preview');
-                $preview_path = str_ireplace('public/', '/storage/', $preview);
+                $preview_path = $request->file()['preview']->store('blog/categories/preview');
             }
 
             $public_time = $request->public_time[0];

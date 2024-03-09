@@ -76,12 +76,6 @@
                         </a>
                     </td>
                     <td>{{ $vote->value }}</td>
-                {{-- <td class="image-cell">
-                        <img src="{{ asset($vote->preview) }}" alt="">
-                    </td>
-                    <td class="image-cell">
-                        <img src="{{ asset($vote->image) }}" alt="">
-                    </td> --}}
                     <td>{{ $vote->created_at }}</td>
                     <td>{{ $vote->updated_at }}</td>
                     <td class="button-column non-text-buttons">

@@ -79,12 +79,10 @@ class BlogController extends Controller
         $image_path = '';
         $preview_path = '';
         if (!empty($request->file()['image'])) {
-            $image = $request->file()['image']->store('public/elfcms/blog/blogs/image');
-            $image_path = str_ireplace('public/', '/storage/', $image);
+            $image_path = $request->file()['image']->store('elfcms/blog/blogs/image');
         }
         if (!empty($request->file()['preview'])) {
-            $preview = $request->file()['preview']->store('public/elfcms/blog/blogs/preview');
-            $preview_path = str_ireplace('public/', '/storage/', $preview);
+            $preview_path = $request->file()['preview']->store('elfcms/blog/blogs/preview');
         }
 
         $validated['image'] = $image_path;
@@ -158,12 +156,10 @@ class BlogController extends Controller
             $image_path = $request->image_path;
             $preview_path = $request->preview_path;
             if (!empty($request->file()['image'])) {
-                $image = $request->file()['image']->store('public/elfcms/blog/blogs/image');
-                $image_path = str_ireplace('public/', '/storage/', $image);
+                $image_path = $request->file()['image']->store('elfcms/blog/blogs/image');
             }
             if (!empty($request->file()['preview'])) {
-                $preview = $request->file()['preview']->store('public/elfcms/blog/blogs/preview');
-                $preview_path = str_ireplace('public/', '/storage/', $preview);
+                $preview_path = $request->file()['preview']->store('elfcms/blog/blogs/preview');
             }
 
             $blog->name = $validated['name'];

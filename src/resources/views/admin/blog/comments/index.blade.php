@@ -97,12 +97,6 @@
                         </a>
                     </td>
                     <td>{{ $comment->text }}</td>
-                {{-- <td class="image-cell">
-                        <img src="{{ asset($comment->preview) }}" alt="">
-                    </td>
-                    <td class="image-cell">
-                        <img src="{{ asset($comment->image) }}" alt="">
-                    </td> --}}
                     <td>{{ $comment->created_at }}</td>
                     <td>{{ $comment->updated_at }}</td>
                     <td>
