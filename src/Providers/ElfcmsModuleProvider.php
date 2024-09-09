@@ -7,6 +7,7 @@ use Elfcms\Elfcms\Http\Middleware\AdminUser;
 use Elfcms\Elfcms\Http\Middleware\CookieCheck;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
@@ -54,5 +55,7 @@ class ElfcmsModuleProvider extends ServiceProvider
         $this->publishes([
             $moduleDir . '/public/admin' => public_path('elfcms/admin/modules/blog/'),
         ], 'admin');
+
+        Blade::component('blog-posts', \Elfcms\Blog\View\Components\Posts::class);
     }
 }
