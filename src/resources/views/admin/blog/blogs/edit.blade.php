@@ -1,22 +1,17 @@
-@extends('elfcms::admin.layouts.blog')
+@extends('elfcms::admin.layouts.main')
 
-@section('blogpage-content')
-
-    @if (Session::has('result'))
-        <div class="alert alert-success">{{ Session::get('result') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+@section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.blog.nav') }}" class="button round-button theme-button" style="color:var(--);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
     </div>
-    @endif
 
-    <div class="post-form">
-        <h3>{{ __('elfcms::default.edit_blog') }}{{ $blog->id }}</h3>
+    <div class="item-form">
+        <h2>{{ __('blog::default.edit_blog') }}{{ $blog->id }}</h2>
         <div class="date-info create-info">
             {{ __('elfcms::default.created_at') }}: {{ $blog->created }}
         </div>
@@ -29,7 +24,10 @@
             <div class="colored-rows-box">
                 <input type="hidden" name="id" id="id" value="{{ $blog->id }}">
                 <div class="input-box colored">
-                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" style="blue" :checked="$blog->active" />
+                    <label for="active">
+                        {{ __('elfcms::default.active') }}
+                    </label>
+                    <x-elfcms::ui.checkbox.switch name="active" id="active" :checked="$blog->active" />
                 </div>
                 <div class="input-box colored">
                     <label for="name">{{ __('elfcms::default.name') }}</label>
@@ -43,10 +41,7 @@
                         <input type="text" name="slug" id="slug" autocomplete="off" value="{{ $blog->slug }}">
                     </div>
                     <div class="input-wrapper">
-                        <div class="autoslug-wrapper">
-                            <input type="checkbox" data-text-id="name" data-slug-id="slug" class="autoslug" checked>
-                            <div class="autoslug-button"></div>
-                        </div>
+                        <x-elfcms::ui.checkbox.autoslug textid="name" slugid="slug" checked="true" />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -81,7 +76,7 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>

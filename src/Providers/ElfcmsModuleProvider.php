@@ -32,13 +32,24 @@ class ElfcmsModuleProvider extends ServiceProvider
     {
         $moduleDir = dirname(__DIR__);
 
-        $locales = config('elfcms.elfcms.locales');
+        //$locales = config('elfcms.elfcms.locales');
 
         $this->loadRoutesFrom($moduleDir . '/routes/web.php');
         $this->loadViewsFrom($moduleDir . '/resources/views', 'elfcms');
         $this->loadMigrationsFrom($moduleDir . '/database/migrations');
 
         $this->loadTranslationsFrom($moduleDir . '/resources/lang', 'blog');
+
+
+        /* if (!empty($locales) && is_array($locales)) {
+            foreach ($locales as $locale) {
+                if (!empty($locale['code'])) {
+                    $this->publishes([
+                        $moduleDir.'/resources/lang/'.$locale['code'].'/validation.php' => resource_path('lang/'.$locale['code'].'/validation.php'),
+                    ],'lang');
+                }
+            }
+        } */
 
         $this->publishes([
             $moduleDir . '/resources/lang' => resource_path('lang/elfcms/blog'),

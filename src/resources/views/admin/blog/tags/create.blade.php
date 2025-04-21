@@ -1,22 +1,17 @@
-@extends('elfcms::admin.layouts.blog')
+@extends('elfcms::admin.layouts.main')
 
-@section('blogpage-content')
-
-    @if (Session::has('tagedited'))
-        <div class="alert alert-success">{{ Session::get('tagedited') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+@section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.blog.tags') }}" class="button round-button theme-button" style="color:var(--);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
     </div>
-    @endif
 
-    <div class="post-form">
-        <h3>{{ __('elfcms::default.create_tag') }}</h3>
+    <div class="item-form">
+        <h2>{{ __('elfcms::default.create_tag') }}</h2>
         <form action="{{ route('admin.blog.tags.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
@@ -29,12 +24,12 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit"
+                    class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>
     <script>
-    tagInput('#name')
+        tagInput('#name')
     </script>
-
 @endsection

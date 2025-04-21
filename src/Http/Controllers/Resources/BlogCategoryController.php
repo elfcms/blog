@@ -73,6 +73,11 @@ class BlogCategoryController extends Controller
             }
         }
 
+        $navParams = ['blog' => $currentBlog];
+        if (!empty($curentCategory)) {
+            $navParams['category'] = $curentCategory;
+        }
+
         return view('elfcms::admin.blog.categories.create', [
             'page' => [
                 'title' => 'Create category',
@@ -83,6 +88,7 @@ class BlogCategoryController extends Controller
             'currentBlog' => $currentBlog,
             'firstBlog' => $firstBlog,
             'category_id' => $category_id,
+            'navParams' => $navParams,
         ]);
     }
 
@@ -142,7 +148,16 @@ class BlogCategoryController extends Controller
 
         $category = BlogCategory::create($validated);
 
-        return redirect(route('admin.blog.categories.edit', $category))->with('categorycreated', 'Category created successfully');
+        $navParams = ['blog' => $category->blog];
+        if (!empty($category->parent)) {
+            $navParams['category'] = $category->parent;
+        }
+
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.blog.nav', $navParams))->with('success', __('blog::default.category_created_successfully'));
+        }
+
+        return redirect(route('admin.blog.categories.edit', $category))->with('success', __('blog::default.category_created_successfully'));
     }
 
     /**
@@ -184,6 +199,12 @@ class BlogCategoryController extends Controller
         $exclude = BlogCategory::childrenid($category->id, true);
         $categories = BlogCategory::whereNotIn('id', $exclude)->get();
         $blogs = Blog::all();
+
+        $navParams = ['blog' => $category->blog];
+        if (!empty($category->parent)) {
+            $navParams['category'] = $category->parent;
+        }
+
         return view('elfcms::admin.blog.categories.edit', [
             'page' => [
                 'title' => 'Edit category #' . $category->id,
@@ -192,6 +213,7 @@ class BlogCategoryController extends Controller
             'category' => $category,
             'categories' => $categories,
             'blogs' => $blogs,
+            'navParams' => $navParams,
         ]);
     }
 
@@ -209,7 +231,7 @@ class BlogCategoryController extends Controller
 
             $category->save();
 
-            return redirect(route('admin.blog.categories'))->with('categoryedited', 'Category edited successfully');
+            return redirect(route('admin.blog.categories'))->with('success', 'Category edited successfully');
         } else {
             $request->merge([
                 'slug' => Str::slug($request->slug),
@@ -265,7 +287,16 @@ class BlogCategoryController extends Controller
 
             $category->save();
 
-            return redirect(route('admin.blog.categories.edit', $category))->with('categoryedited', 'Category edited successfully');
+            $navParams = ['blog' => $category->blog];
+            if (!empty($category->parent)) {
+                $navParams['category'] = $category->parent;
+            }
+    
+            if ($request->input('submit') == 'save_and_close') {
+                return redirect(route('admin.blog.nav', $navParams))->with('success', __('blog::default.category_edited_successfully'));
+            }
+
+            return redirect(route('admin.blog.categories.edit', $category))->with('success', __('blog::default.category_edited_successfully'));
         }
     }
 
@@ -281,6 +312,6 @@ class BlogCategoryController extends Controller
             return redirect(route('admin.blog.categories'))->withErrors(['categorydelerror' => 'Error of category deleting']);
         }
 
-        return redirect(route('admin.blog.categories'))->with('categorydeleted', 'Category deleted successfully');
+        return redirect(route('admin.blog.categories'))->with('success', 'Category deleted successfully');
     }
 }

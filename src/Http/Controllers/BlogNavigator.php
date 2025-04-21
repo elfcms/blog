@@ -55,7 +55,7 @@ class BlogNavigator extends Controller
 
         return view('elfcms::admin.blog.nav.index', [
             'page' => [
-                'title' => empty($blog->id) ? __('blog::default.blogs') : __('blog::default.blog') . ': ' . $blog->name,
+                'title' => empty($blog->id) ? __('blog::default.blogs') : /* __('blog::default.blog') . ': ' . */ $blog->name,
                 'current' => url()->current(),
             ],
             'blogs' => $blogs,

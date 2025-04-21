@@ -1,25 +1,17 @@
-@extends('elfcms::admin.layouts.blog')
+@extends('elfcms::admin.layouts.main')
 
-@section('blogpage-content')
-
-    @if (Session::has('categoryedited'))
-        <div class="alert alert-success">{{ Session::get('categoryedited') }}</div>
-    @endif
-    @if (Session::has('categorycreated  '))
-        <div class="alert alert-success">{{ Session::get('categorycreated') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+@section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.blog.nav',$navParams) }}" class="button round-button theme-button" style="color:var(--);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
     </div>
-    @endif
 
-    <div class="post-form">
-        <h3>{{ __('elfcms::default.edit_category') }}{{ $category->id }}</h3>
+    <div class="item-form">
+        <h2>{{ __('elfcms::default.edit_category') }}{{ $category->id }}</h2>
         <div class="date-info create-info">
             {{ __('elfcms::default.created_at') }}: {{ $category->created }}
         </div>
@@ -32,7 +24,10 @@
             <div class="colored-rows-box">
                 <input type="hidden" name="id" id="id" value="{{ $category->id }}">
                 <div class="input-box colored">
-                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" style="blue" :checked="$category->active" />
+                    <label for="active">
+                        {{ __('elfcms::default.active') }}
+                    </label>
+                    <x-elfcms::ui.checkbox.switch name="active" id="active" :checked="$category->active" />
                 </div>
                 <div class="input-box colored">
                     <label for="blog_id">{{ __('blog::default.blog') }}</label>
@@ -68,10 +63,7 @@
                         <input type="text" name="slug" id="slug" autocomplete="off" value="{{ $category->slug }}">
                     </div>
                     <div class="input-wrapper">
-                        <div class="autoslug-wrapper">
-                            <input type="checkbox" data-text-id="name" data-slug-id="slug" class="autoslug" checked>
-                            <div class="autoslug-button"></div>
-                        </div>
+                        <x-elfcms::ui.checkbox.autoslug textid="name" slugid="slug" checked="true" />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -83,13 +75,13 @@
                 <div class="input-box colored">
                     <label for="preview">{{ __('elfcms::default.preview') }}</label>
                     <div class="input-wrapper">
-                        <x-elfcms-input-image code="preview" value="{{$category->preview}}" />
+                        <x-elf-input-file value="{{ $category->preview }}" :params="['name' => 'preview']" :download="true" />
                     </div>
                 </div>
                 <div class="input-box colored">
                     <label for="image">{{ __('elfcms::default.image') }}</label>
                     <div class="input-wrapper">
-                        <x-elfcms-input-image code="image" value="{{$category->image}}" />
+                        <x-elf-input-file value="{{ $category->image }}" :params="['name' => 'image']" :download="true" />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -120,7 +112,10 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close"
+                    class="button color-text-button info-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.blog.nav',$navParams) }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

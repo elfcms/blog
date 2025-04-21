@@ -1,41 +1,26 @@
-@extends('elfcms::admin.layouts.blog')
+@extends('elfcms::admin.layouts.main')
 
-@section('blogpage-content')
-
-    @if (Session::has('commentedited'))
-        <div class="alert alert-success">{{ Session::get('commentedited') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+@section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.blog.comments') }}" class="button round-button theme-button" style="color:var(--);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
     </div>
-    @endif
 
-    <div class="post-form">
-        <h3>{{ __('elfcms::default.create_post') }}</h3>
+    <div class="item-form">
+        <h2>{{ __('blog::default.add_comment') }}</h2>
         <form action="{{ route('admin.blog.comments.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="colored-rows-box">
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="active"
-                                id="active"
-                                checked
-                            >
-                            <i></i>
-                            <label for="active">
-                                {{ __('elfcms::default.active') }}
-                            </label>
-                        </div>
-                    </div>
+                    <label for="active">
+                        {{ __('elfcms::default.active') }}
+                    </label>
+                    <x-elfcms::ui.checkbox.switch name="active" id="active" checked="true" />
                 </div>
                 <div class="input-box colored">
                     <label for="post_id">{{ __('elfcms::default.post') }}</label>
@@ -58,12 +43,6 @@
                         </select>
                     </div>
                 </div>
-                {{--<div class="input-box colored">
-                    <label for="user_id">{{ __('elfcms::default.user') }}</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="user_id" id="user_id" autocomplete="off">
-                    </div>
-                </div>--}}
                 <div class="input-box colored">
                     <label for="text">{{ __('elfcms::default.text') }}</label>
                     <div class="input-wrapper">
@@ -72,7 +51,10 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close"
+                    class="button color-text-button info-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.blog.comments') }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

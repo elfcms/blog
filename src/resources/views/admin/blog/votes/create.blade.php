@@ -1,22 +1,17 @@
-@extends('elfcms::admin.layouts.blog')
+@extends('elfcms::admin.layouts.main')
 
-@section('blogpage-content')
-
-    @if (Session::has('voteedited'))
-        <div class="alert alert-success">{{ Session::get('voteedited') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+@section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.blog.votes') }}" class="button round-button theme-button" style="color:var(--);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
     </div>
-    @endif
 
-    <div class="post-form">
-        <h3>{{ __('elfcms::default.create_post') }}</h3>
+    <div class="item-form">
+        <h2>{{ __('blog::default.create_vote') }}</h2>
         <form action="{{ route('admin.blog.votes.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
@@ -31,12 +26,6 @@
                         </select>
                     </div>
                 </div>
-                {{--<div class="input-box colored">
-                    <label for="user_id">{{ __('elfcms::default.user') }}</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="user_id" id="user_id" autocomplete="off">
-                    </div>
-                </div>--}}
                 <div class="input-box colored">
                     <label for="value">{{ __('elfcms::default.value') }}</label>
                     <div class="input-wrapper">
@@ -45,7 +34,7 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>

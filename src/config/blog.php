@@ -10,7 +10,16 @@ return [
     |
     */
 
-    'version' => '0.10.1',
+    'version' => '1.0.1',
+    'developer' => 'Maxim Klassen',
+    'license' => 'MIT',
+    'author' => 'Maxim Klassen',
+    'title' => 'Blog',
+    'description' => '',
+    'url' => '',
+    'github' => 'https://github.com/elfcms/blog',
+    'release_status' => 'stable',
+    'release_date' => '2025',
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +30,7 @@ return [
     |
     */
 
-    'basic_package' => '2.0',
+    'basic_package' => '3.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -54,8 +63,10 @@ return [
             "lang_title" => "blog::default.blog",
             "route" => "admin.blog.nav",
             "parent_route" => "admin.blog",
-            "icon" => "/vendor/elfcms/blog/admin/images/icons/blog.png",
+            "icon" => "/elfcms/admin/modules/blog/images/icons/blog.svg",
             "position" => 400,
+            "color" => "#2abc8f",
+            "second_color" => "#30a8ab",
             "submenu" => [
                 [
                     "title" => "Navigation",

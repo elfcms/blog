@@ -1,0 +1,8 @@
+{
+    "name": "blog",
+    "title": "Blog",
+    "version": "1.0",
+    "github": "https://github.com/elfcms/blog",
+    "zip": "https://github.com/elfcms/blog/archive/refs/tags/1.0",
+    "release_status": "stable"
+}

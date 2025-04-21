@@ -117,7 +117,7 @@ class BlogLikeController extends Controller
                 return BlogPost::find($validated['blog_posts_id'])->getLike();
             }
 
-            return redirect(route('admin.blog.likes.edit', $checklike->id))->with('likeedited', 'like edited successfully');
+            return redirect(route('admin.blog.likes.edit', $checklike->id))->with('success', 'like edited successfully');
         }
 
         $validated['user_id'] = $userId;
@@ -128,7 +128,7 @@ class BlogLikeController extends Controller
             return BlogPost::find($validated['blog_posts_id'])->getLike();
         }
 
-        return redirect(route('admin.blog.likes.edit', $like->id))->with('likecreated', 'like created successfully');
+        return redirect(route('admin.blog.likes.edit', $like->id))->with('success', 'like created successfully');
     }
 
     /**
@@ -188,7 +188,7 @@ class BlogLikeController extends Controller
 
         $like->save();
 
-        return redirect(route('admin.blog.likes.edit', $like->id))->with('likeedited', 'like edited successfully');
+        return redirect(route('admin.blog.likes.edit', $like->id))->with('success', 'like edited successfully');
     }
 
     /**
@@ -203,6 +203,6 @@ class BlogLikeController extends Controller
             return redirect(route('admin.blog.likes'))->withErrors(['likedelerror' => 'Error of like deleting']);
         }
 
-        return redirect(route('admin.blog.likes'))->with('likedeleted', 'like deleted successfully');
+        return redirect(route('admin.blog.likes'))->with('success', 'like deleted successfully');
     }
 }

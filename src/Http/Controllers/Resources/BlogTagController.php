@@ -67,17 +67,18 @@ class BlogTagController extends Controller
 
         if ($request->ajax()) {
             $result = 'error';
-            $message = __('elf.error_of_tag_created');
+            $message = __('blog::default.error_of_tag_created');
             $data = [];
             if ($tag) {
                 $result = 'success';
-                $message = __('elf.tag_created_successfully');
+                $message = __('blog::default.tag_created_successfully');
                 $data = ['id' => $tag->id];
             }
             return json_encode(['result' => $result, 'message' => $message, 'data' => $data]);
         }
 
-        return redirect(route('admin.blog.tags.edit', $tag->id))->with('tagcreated', __('elf.tag_created_successfully'));
+        //return redirect(route('admin.blog.tags.edit', $tag->id))->with('success', __('blog::default.tag_created_successfully'));
+        return redirect(route('admin.blog.tags'))->with('success', __('blog::default.tag_created_successfully'));
     }
 
     /**
@@ -133,7 +134,8 @@ class BlogTagController extends Controller
         $tag->name = $validated['name'];
         $tag->save();
 
-        return redirect(route('admin.blog.tags.edit', $tag->id))->with('tagedited', __('elf.tag_edited_successfully'));
+        //return redirect(route('admin.blog.tags.edit', $tag->id))->with('success', __('blog::default.tag_edited_successfully'));
+        return redirect(route('admin.blog.tags'))->with('success', __('blog::default.tag_edited_successfully'));
     }
 
     /**
@@ -148,7 +150,7 @@ class BlogTagController extends Controller
             return redirect(route('admin.blog.tags'))->withErrors(['tagdelerror' => 'Error of tag deleting']);
         }
 
-        return redirect(route('admin.blog.tags'))->with('tagdeleted', 'Tag deleted successfully');
+        return redirect(route('admin.blog.tags'))->with('success', 'Tag deleted successfully');
     }
 
     /**
@@ -165,7 +167,7 @@ class BlogTagController extends Controller
             ]);
 
             $result = 'error';
-            $message = __('elf.error_of_tag_created');
+            $message = __('blog::default.error_of_tag_created');
             $data = [];
 
             if ($tagByName = BlogTag::where('name', $validated['name'])->first()) {
@@ -177,7 +179,7 @@ class BlogTagController extends Controller
 
                 if ($tag) {
                     $result = 'success';
-                    $message = __('elf.tag_created_successfully');
+                    $message = __('blog::default.tag_created_successfully');
                     $data = ['id' => $tag->id, 'name' => $validated['name']];
                 }
             }

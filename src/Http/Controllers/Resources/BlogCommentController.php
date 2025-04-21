@@ -115,7 +115,11 @@ class BlogCommentController extends Controller
             return $comment;
         }
 
-        return redirect(route('admin.blog.comments.edit', $comment->id))->with('commentcreated', 'Comment created successfully');
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.blog.comments'))->with('success',__('blog::default.comment_created_successfully'));
+        }
+
+        return redirect(route('admin.blog.comments.edit', $comment->id))->with('success', __('blog::default.comment_created_successfully'));
     }
 
     /**
@@ -166,7 +170,7 @@ class BlogCommentController extends Controller
 
             $comment->save();
 
-            return redirect(route('admin.blog.comments'))->with('commentedited', 'Comment edited successfully');
+            return redirect(route('admin.blog.comments'))->with('success', __('blog::default.comment_edited_successfully'));
         }
         $validated = $request->validate([
             'post_id' => 'required',
@@ -180,7 +184,11 @@ class BlogCommentController extends Controller
 
         $comment->save();
 
-        return redirect(route('admin.blog.comments.edit', $comment->id))->with('commentedited', 'Comment edited successfully');
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.blog.comments'))->with('success',__('blog::default.comment_edited_successfully'));
+        }
+
+        return redirect(route('admin.blog.comments.edit', $comment->id))->with('success', __('blog::default.comment_edited_successfully'));
     }
 
     /**
@@ -192,9 +200,9 @@ class BlogCommentController extends Controller
     public function destroy(BlogComment $comment)
     {
         if (!$comment->delete()) {
-            return redirect(route('admin.blog.comments'))->withErrors(['commentdelerror' => 'Error of comment deleting']);
+            return redirect(route('admin.blog.comments'))->withErrors(['commentdelerror' => __('blog::default.error_of_comment_deleting')]);
         }
 
-        return redirect(route('admin.blog.comments'))->with('commentdeleted', 'Comment deleted successfully');
+        return redirect(route('admin.blog.comments'))->with('success', __('blog::default.comment_deleted_successfully'));
     }
 }

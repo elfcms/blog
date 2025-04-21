@@ -108,7 +108,7 @@ class BlogVoteController extends Controller
                 return BlogPost::find($validated['post_id'])->getVote();
             }
 
-            return redirect(route('admin.blog.votes.edit', $checkVote->id))->with('voteedited', 'Vote edited successfully');
+            return redirect(route('admin.blog.votes.edit', $checkVote->id))->with('success', 'Vote edited successfully');
         }
 
         $validated['user_id'] = $userId;
@@ -119,7 +119,7 @@ class BlogVoteController extends Controller
             return BlogPost::find($validated['post_id'])->getVote();
         }
 
-        return redirect(route('admin.blog.votes.edit', $vote->id))->with('votecreated', 'Vote created successfully');
+        return redirect(route('admin.blog.votes.edit', $vote->id))->with('success', 'Vote created successfully');
     }
 
     /**
@@ -173,7 +173,7 @@ class BlogVoteController extends Controller
 
         $vote->save();
 
-        return redirect(route('admin.blog.votes.edit', $vote->id))->with('voteedited', 'Vote edited successfully');
+        return redirect(route('admin.blog.votes.edit', $vote->id))->with('success', 'Vote edited successfully');
     }
 
     /**
@@ -188,6 +188,6 @@ class BlogVoteController extends Controller
             return redirect(route('admin.blog.votes'))->withErrors(['votedelerror' => 'Error of vote deleting']);
         }
 
-        return redirect(route('admin.blog.votes'))->with('votedeleted', 'Vote deleted successfully');
+        return redirect(route('admin.blog.votes'))->with('success', 'Vote deleted successfully');
     }
 }

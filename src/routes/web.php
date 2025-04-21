@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 $adminPath = Config::get('elfcms.elfcms.admin_path') ?? '/admin';
 
-Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
+Route::group(['middleware'=>['web', 'locales','cookie']],function() use ($adminPath) {
 
     Route::name('admin.')->middleware(['admin','access'])->group(function() use ($adminPath) {
 
@@ -16,9 +16,6 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
         ->name('blog');
 
         Route::name('blog.')->group(function() use ($adminPath) {
-            /* Route::resource($adminPath . '/blog/blogs', \Elfcms\Blog\Http\Controllers\Resources\BlogController::class)->names(['index' => 'blogs']);
-            Route::resource($adminPath . '/blog/categories', \Elfcms\Blog\Http\Controllers\Resources\BlogCategoryController::class)->names(['index' => 'categories']);
-            Route::resource($adminPath . '/blog/posts', \Elfcms\Blog\Http\Controllers\Resources\BlogPostController::class)->names(['index' => 'posts']); */
             Route::post($adminPath . '/blog/tags/addnotexist', [\Elfcms\Blog\Http\Controllers\Resources\BlogTagController::class,'addNotExist'])->name('tags.addnotexist');
             Route::resource($adminPath . '/blog/tags', \Elfcms\Blog\Http\Controllers\Resources\BlogTagController::class)->names(['index' => 'tags']);
             Route::resource($adminPath . '/blog/comments', \Elfcms\Blog\Http\Controllers\Resources\BlogCommentController::class)->names(['index' => 'comments']);
@@ -31,10 +28,6 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
             Route::resource($adminPath . '/blog/posts', \Elfcms\Blog\Http\Controllers\Resources\BlogPostController::class)->names(['index' => 'posts']);
             Route::resource($adminPath . '/blog/categories', \Elfcms\Blog\Http\Controllers\Resources\BlogCategoryController::class)->names(['index' => 'categories']);
 
-            /* Route::name('properties.')->group(function() use ($adminPath) {
-                Route::resource($adminPath . '/blog/{blog}/properties/category', \Elfcms\Blog\Http\Controllers\Resources\BlogCategoryPropertyController::class);
-                Route::resource($adminPath . '/blog/{blog}/properties/post', \Elfcms\Blog\Http\Controllers\Resources\BlogPostPropertyController::class);
-            }); */
         });
 
         Route::name('ajax.')->group(function() {

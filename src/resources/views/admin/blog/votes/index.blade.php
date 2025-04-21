@@ -1,23 +1,15 @@
-@extends('elfcms::admin.layouts.blog')
+@extends('elfcms::admin.layouts.main')
 
-@section('blogpage-content')
-
-    @if (Session::has('votedeleted'))
-    <div class="alert alert-alternate">{{ Session::get('votedeleted') }}</div>
-    @endif
-    @if (Session::has('voteedited'))
-    <div class="alert alert-alternate">{{ Session::get('voteedited') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-    <div class="widetable-wrapper">
+@section('pagecontent')
+    {{-- <div class="table-search-box">
+        <a href="{{ route('admin.blog.votes.create') }}" class="button round-button theme-button">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('blog::default.create_vote') }}
+            </span>
+        </a>
+    </div> --}}
+    <div class="grid-table-wrapper">
         @if (!empty($post))
             <div class="alert alert-alternate">
                 {{ __('elfcms::default.showing_results_for_post') }} <strong>#{{ $post->id }} {{ $post->name }}</strong>
@@ -28,7 +20,7 @@
                 {{ __('elfcms::default.showing_results_for_user') }} <strong>#{{ $user->id }} {{ $user->email }}</strong>
             </div>
         @endif
-        <table class="grid-table table-cols-7" style="--first-col:65px; --last-col:100px; --minw:800px">
+        <table class="grid-table table-cols" style="--first-col:65px; --last-col:100px; --minw:800px; --cols-count:7;">
             <thead>
                 <tr>
                     <th>
@@ -60,9 +52,6 @@
             </thead>
             <tbody>
             @foreach ($votes as $vote)
-            @php
-                //dd($vote);
-            @endphp
                 <tr data-id="{{ $vote->id }}" class="">
                     <td>{{ $vote->id }}</td>
                     <td>
@@ -79,13 +68,17 @@
                     <td>{{ $vote->created_at }}</td>
                     <td>{{ $vote->updated_at }}</td>
                     <td class="button-column non-text-buttons">
-                        <a href="{{ route('admin.blog.votes.edit',$vote->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <a href="{{ route('admin.blog.votes.edit',$vote->id) }}" class="button icon-button" title="{{ __('elfcms::default.edit') }}">
+                            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/edit.svg', svg: true) !!}
+                        </a>
                         <form action="{{ route('admin.blog.votes.destroy',$vote->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $vote->id }}">
                             <input type="hidden" name="name" value="{{ $vote->name }}">
-                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button icon-button icon-alarm-button" title="{{ __('elfcms::default.delete') }}">
+                                {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/delete.svg', svg: true) !!}
+                            </button>
                         </form>
                     </td>
                 </tr>
@@ -111,14 +104,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button color-text-button danger-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button color-text-button',
                                 callback:'close'
                             }
                         ],

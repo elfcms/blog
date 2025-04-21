@@ -94,7 +94,7 @@ class BlogController extends Controller
 
         $blog = Blog::create($validated);
 
-        return redirect(route('admin.blog.blogs.edit', $blog))->with('result', 'Blog created successfully');
+        return redirect(route('admin.blog.blogs.edit', $blog))->with('success', 'Blog created successfully');
     }
 
     /**
@@ -137,7 +137,7 @@ class BlogController extends Controller
 
             $blog->save();
 
-            return redirect(route('admin.blog.blogs'))->with('result', 'Blog edited successfully');
+            return redirect(route('admin.blog.blogs'))->with('success', 'Blog edited successfully');
         } else {
             $request->merge([
                 'slug' => Str::slug($request->slug),
@@ -173,7 +173,7 @@ class BlogController extends Controller
 
             $blog->save();
 
-            return redirect(route('admin.blog.blogs.edit', $blog))->with('result', 'Blog edited successfully');
+            return redirect(route('admin.blog.blogs.edit', $blog))->with('success', 'Blog edited successfully');
         }
     }
 
@@ -186,6 +186,6 @@ class BlogController extends Controller
             return redirect(route('admin.blog.blogs'))->withErrors(['delerror' => 'Error of blog deleting']);
         }
 
-        return redirect(route('admin.blog.categories'))->with('result', 'Blog deleted successfully');
+        return redirect(route('admin.blog.categories'))->with('success', 'Blog deleted successfully');
     }
 }

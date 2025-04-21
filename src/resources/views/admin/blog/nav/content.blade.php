@@ -7,15 +7,19 @@
 </div>
 @endif --}}
 @if ($category || $blog->name)
-<h4 class="blog-nav-title">
+<h2 class="blog-nav-title">
     {{ $category->name ?? $blog->name ?? __('blog::default.blogs') }}
-</h4>
-<div class="blog-nav-content">
+</h2>
+{{-- <div class="blog-nav-content"> --}}
     @if ($category)
         @if ($category->parent)
-            <a class="blog-nav-up" href="{{ route('admin.blog.nav',['blog'=>$blog,'category'=>$category->parent]) }}">..</a>
+            <a class="blog-nav-up" href="{{ route('admin.blog.nav',['blog'=>$blog,'category'=>$category->parent]) }}">
+                {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/path_back.svg', svg: true) !!}
+            </a>
         @else
-            <a class="blog-nav-up" href="{{ route('admin.blog.nav',['blog'=>$blog]) }}">..</a>
+            <a class="blog-nav-up" href="{{ route('admin.blog.nav',['blog'=>$blog]) }}">
+                {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/path_back.svg', svg: true) !!}
+            </a>
         @endif
         @if ($category->categories)
         <div class="blog-nav-categories blog-nav-dnd-area blog-nav-dnd-area-cat" data-container="category">
@@ -47,14 +51,14 @@
         </div>
         @endif
     @endif
-</div>
+{{-- </div> --}}
 @else
 <div class="blog-nav-content">
     <div class="blog-nav-dnd-area blog-nav-dnd-area-ib">
     @forelse ($blogs as $ib)
         @include('elfcms::admin.blog.nav.partials.blog')
     @empty
-        <div class="blog-nav-list-none">{{ __('elfcms::default.nothing_was_found') }}</div>
+        {{-- <div class="blog-nav-list-none">{{ __('elfcms::default.nothing_was_found') }}</div> --}}
     @endforelse
     </div>
 </div>
@@ -77,14 +81,14 @@ function setConfirmDelete(forms) {
                     buttons:[
                         {
                             title:'{{ __('elfcms::default.delete') }}',
-                            class:'default-btn delete-button',
+                            class:'button color-text-button danger-button',
                             callback: function(){
                                 self.submit()
                             }
                         },
                         {
                             title:'{{ __('elfcms::default.cancel') }}',
-                            class:'default-btn cancel-button',
+                            class:'button color-text-button',
                             callback:'close'
                         }
                     ],
