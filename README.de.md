@@ -1,4 +1,4 @@
-🇬🇧 [English](README.en.md) | 🇷🇺 [Русский](README.ru.md)
+🇬🇧 [English](README.md) | 🇷🇺 [Русский](README.ru.md)
 
 ---
 # Blog Modul for ELF CMS
