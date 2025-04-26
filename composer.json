@@ -1,7 +1,6 @@
 {
     "name": "elfcms/blog",
     "description": "",
-    "version": "1.0.1",
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
