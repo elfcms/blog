@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'version' => '1.0.2',
+    'version' => '1.0.3',
     'developer' => 'Maxim Klassen',
     'license' => 'MIT',
     'author' => 'Maxim Klassen',
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'basic_package' => '3.0',
+    'basic_package' => '3.0.11',
 
     /*
     |--------------------------------------------------------------------------
