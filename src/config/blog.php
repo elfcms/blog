@@ -150,4 +150,10 @@ return [
             "actions" => ["read", "write"],
         ],
     ],
+
+    "pages" => [
+        'name' => 'Blog',
+        'class' => \Elfcms\Blog\Models\Blog::class ?? null,
+        'options_view' => 'elfcms::admin.pages.modules.blog-options',
+    ],
 ];

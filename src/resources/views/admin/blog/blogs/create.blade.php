@@ -2,7 +2,7 @@
 
 @section('pagecontent')
     <div class="table-search-box">
-        <a href="{{ route('admin.blog.nav') }}" class="button round-button theme-button" style="color:var(--);">
+        <a href="{{ route('admin.blog.nav') }}" class="button round-button theme-button" style="color:var(--default-color);">
             {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
             <span class="button-collapsed-text">
                 {{ __('elfcms::default.back') }}
@@ -25,13 +25,13 @@
                 <div class="input-box colored">
                     <label for="name">{{ __('elfcms::default.name') }}</label>
                     <div class="input-wrapper">
-                        <input type="text" name="name" id="name" autocomplete="off">
+                        <input type="text" name="name" id="name">
                     </div>
                 </div>
                 <div class="input-box colored">
                     <label for="slug">{{ __('elfcms::default.slug') }}</label>
                     <div class="input-wrapper">
-                        <input type="text" name="slug" id="slug" autocomplete="off">
+                        <input type="text" name="slug" id="slug">
                     </div>
                     <div class="input-wrapper">
                         <x-elfcms::ui.checkbox.autoslug textid="name" slugid="slug" checked="true" />
