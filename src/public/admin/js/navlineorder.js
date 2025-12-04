@@ -116,7 +116,7 @@ function itemPositionSuccess(type) {
             lines: linesData,
         });
         const token = document.querySelector("input[name='_token']").value;
-        fetch('/elfcms/api/blog/' + type + '/lineorder',{
+        fetch(adminPath+'/elfcms/api/blog/' + type + '/lineorder',{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
